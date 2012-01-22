@@ -4,13 +4,14 @@
 \usepackage[english, russian]{babel}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=1.5cm]{geometry}
 
 \begin{document}
 
-\newtheorem{Def}{Определение}
-\newtheorem{Th}{Теорема}
-\newtheorem{Lem}{Лемма}
+\newtheorem*{Def}{Определение}
+\newtheorem*{Th}{Теорема}
+\newtheorem*{Lem}{Лемма}
 
 \section{Метод Ритца}	
 	Выделяют два основных типа методов решения вариационных задач.
@@ -63,12 +64,12 @@
 	$\mu$.
 	
 	\begin{Th}
-	Если функционал $V[y]$ непрерывен (в смысле метрики пространства, в котором он
-	рассматривается) и система функций ${\varphi_n}$ полная, то 
-	\[
-		\lim_{n \to \infty} \mu_n = \mu~,
-	\]
-	где $\mu$ --- минимум функционала $V[y]$.
+		Если функционал $V[y]$ непрерывен (в смысле метрики пространства, в котором он
+		рассматривается) и система функций ${\varphi_n}$ полная, то 
+		\[
+			\lim_{n \to \infty} \mu_n = \mu~,
+		\]
+		где $\mu$ --- минимум функционала $V[y]$.
 	\end{Th}
 
 
