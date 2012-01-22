@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{pgfplots}
 \usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=1.5cm]{geometry}
 
 \begin{document}
@@ -12,6 +13,7 @@
 \newtheorem*{Def}{Определение}
 \newtheorem*{Th}{Теорема}
 \newtheorem*{Lem}{Лемма}
+\newtheorem*{Note}{Замечание}
 
 \section{Метод Ритца}	
 	Выделяют два основных типа методов решения вариационных задач.
@@ -71,6 +73,153 @@
 		\]
 		где $\mu$ --- минимум функционала $V[y]$.
 	\end{Th}
+
+	\begin{Note} Быстрота сходимости метода Ритца сильно зависит от выбора
+		системы базисных функций. Однако при удачном выборе для
+		достижения приемлемой точности часто бывает достаточно 3-4
+		слагаемых в линейной комбинации.
+	\end{Note}
+
+	Применим изложенную идею к достаточно часто встречающейся вариационной задаче.
+	Итак, пусть необходимо минимизировать значение функционала
+	\[
+		V[y] = \int\limits_0^1{\left[p(x)\left(y'(x)\right)^2 + q(x)y^2(x) - 2f(x)y(x)\right]}dx
+	\]
+	на множестве функций $M = \left\{y(x)\,\, |\,\, y(x) \in C^2_{[0,1]},\,\, y(0)=y(1)=0 \right\}$.
+	Зафиксируем теперь некоторую конечную систему линейно-независимых
+	функций $\left\{\varphi_i\right\}_{i=1}^n$ из того же класса $M$.
+	Вместо исходной задачи будем решать значительно более узкую задачу
+	минимизации функционала на множестве линейных комбинаций
+	$$\varphi(x) = \sum_{i=1}^nc_i\varphi_i(x)~.$$
+	Подставим эту линейную комбинацию в функционал:
+	\begin{align*}
+		V[\varphi(x)]& = V\left[\sum_{i=1}^n{c_i\varphi_i(x)}\right] = \\
+			     & = \int\limits_0^1 \left\{
+			     p(x)\left[\sum_{i=1}^n{c_i\varphi'_i(x)}\right]^2 +
+			     q(x)\left[\sum_{i=1}^n{c_i\varphi_i(x)}\right]^2 -
+			     2f(x)\sum_{i=1}^n{c_i\varphi_i(x)}
+			     \right\}dx~.
+	\end{align*}
+	Чтобы найти минимум функционала, воспользуемся необходимым условием
+	экстремума:
+	\[	
+		\frac{\partial V}{\partial c_j} = 0, \quad j = \overline{1,n}
+	\]
+	Дифференцирование функционала по $c_j$ дает
+	\[
+		\frac{\partial V}{\partial c_j} = 
+		     \int\limits_0^1\left\{
+			     2p(x)\sum_{i=1}^n{c_i\varphi'_i(x)\varphi'_j(x)} +
+			     2q(x)\sum_{i=1}^n{c_i\varphi_i(x)\varphi_j(x)} -
+			     2f(x)\varphi_j(x)
+		     \right\}dx~.
+	\]
+	После очевидных преобразований получаем систему линейных алгебраических
+	уравнений для нахождения коэффициентов линейной комбинации:
+	\[
+		\sum_{i=1}^n\left[
+			\int\limits_0^1\left(p(x)\varphi'_i(x)\varphi'_j(x) + 
+			q(x)\varphi_i(x)\varphi_j(x)\right)dx
+		\right]c_i 
+		- \int\limits_0^1{f(x)\varphi_j(x)}dx = 0, \quad j =
+		\overline{1,n}
+	\]
+	В матричной форме эта система запишется в виде $Ac=b$, где
+	\begin{gather*}
+		a_{ij} = \int\limits_0^1\left(p(x)\varphi'_i(x)\varphi'_j(x) + 
+			q(x)\varphi_i(x)\varphi_j(x)\right)dx,	\\
+		b_j = \int\limits_0^1{f(x)\varphi_j(x)}dx
+	\end{gather*}
+
+	Рассмотрим теперь вопрос выбора базисных функций. Простейшим вариантом
+	является система кусочно-линейных функций. Чтобы ее построить,
+	необходимо вначале задать разбиение отрезка $[0, 1]$ на $n$ отрезков:
+	\[
+		0 = x_0 < x_1 < \dots < x_n < x_{n+1} = 1~.
+	\]
+	Полагая $h_i = x_{i+1} - x_i$, определим следующие функции:
+	\[
+		\varphi_i(x) = 
+		\begin{cases}
+			0, & \text{если} \quad 0 \leq x \leq x_{i-1}, \\
+			\frac{1}{h_{i-1}}\left(x-x_{i-1}\right), & \text{если} \quad x_{i-1} < x \leq x_{i}, \\
+			\frac{1}{h_i}\left(x_{i+1}-x\right), & \text{если} \quad x_i < x \leq x_{i+1}, \\
+			0, & \text{если} \quad x_{i+1} < x < 1~.
+		\end{cases},\quad i = \overline{1,n}
+	\]
+	\begin{center}
+	\begin{tikzpicture}
+		\pgfplotsset{every axis plot/.append style={line width=1pt}}
+		\begin{axis}[
+			xlabel=x,
+			ylabel=y,
+			xtick=\empty,
+			ytick={0,1},
+			xtick={0,1},
+			extra x ticks={0.333, 0.5},
+			extra x tick labels={$x_1$, $x_2$},
+			axis x line=middle,
+			axis y line=middle]
+			\addplot[] coordinates {
+			(0.0, 	0.0)
+			(0.333, 1.0)
+			(0.5,	0.0)
+			(1.0,	0.0)
+			};
+		\draw (4cm,4cm) node {$y=\varphi_1(x)$};
+		\end{axis}
+	\end{tikzpicture}
+	\begin{tikzpicture}
+		\pgfplotsset{every axis plot/.append style={line width=1pt}}
+		\begin{axis}[
+			xlabel=x,
+			ylabel=y,
+			xtick=\empty,
+			ytick={0,1},
+			xtick={0,1},
+			extra x ticks={0.2, 0.4, 0.75},
+			extra x tick labels={$x_{i-1}$, $x_i$, $x_{i+1}$},
+			axis x line=middle,
+			axis y line=middle]
+			\addplot[] coordinates {
+			(0.0, 	0.0)
+			(0.2,	0.0)
+			(0.4,	1.0)
+			(0.75,	0.0)
+			(1.0,	0.0)
+			};
+		\draw (5.5cm,4cm) node {$y=\varphi_i(x)$};
+		\end{axis}
+	\end{tikzpicture}
+
+	\begin{tikzpicture}
+		\pgfplotsset{every axis plot/.append style={line width=1pt}}
+		\begin{axis}[
+			xlabel=x,
+			ylabel=y,
+			xtick=\empty,
+			ytick={0,1},
+			xtick={0,1},
+			extra x ticks={0.2, 0.4, 0.75},
+			extra x tick labels={$x_{i-1}$, $x_i$, $x_{i+1}$},
+			axis x line=middle,
+			axis y line=middle]
+			\addplot[] coordinates {
+			(0.0, 	0.0)
+			(0.2,	0.0)
+			(0.4,	1.0)
+			(0.75,	0.0)
+			(1.0,	0.0)
+			};
+		\draw (5.5cm,4cm) node {$y=\varphi_i(x)$};
+		\end{axis}
+	\end{tikzpicture}
+
+	\end{center}
+
+
+
+
 
 
 \end{document}
