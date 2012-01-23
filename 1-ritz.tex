@@ -87,7 +87,11 @@
 	\]
 	на множестве функций $M = \left\{y(x)\,\, |\,\, y(x) \in C^2_{[0,1]},\,\, y(0)=y(1)=0 \right\}$.
 	Зафиксируем теперь некоторую конечную систему линейно-независимых
-	функций $\left\{\varphi_i\right\}_{i=1}^n$ из того же класса $M$.
+	функций $\left\{\varphi_i\right\}_{i=1}^n$, которые удовлетворяют
+	однородным краевым условиям
+	\[
+		\varphi_i(0) = \varphi_i(1) = 0,\quad i = \overline{1,n}~.
+	\]
 	Вместо исходной задачи будем решать значительно более узкую задачу
 	минимизации функционала на множестве линейных комбинаций
 	$$\varphi(x) = \sum_{i=1}^nc_i\varphi_i(x)~.$$
@@ -147,10 +151,12 @@
 			0, & \text{если} \quad x_{i+1} < x < 1~.
 		\end{cases},\quad i = \overline{1,n}
 	\]
+	Ниже на рисунке приведены схематические графики этих базисных функций.
 	\begin{center}
 	\begin{tikzpicture}
-		\pgfplotsset{every axis plot/.append style={line width=1pt}}
+		\pgfplotsset{every axis plot/.append style={line width=1.5pt}}
 		\begin{axis}[
+			width=4cm, scale only axis,
 			xlabel=x,
 			ylabel=y,
 			xtick=\empty,
@@ -166,12 +172,13 @@
 			(0.5,	0.0)
 			(1.0,	0.0)
 			};
-		\draw (4cm,4cm) node {$y=\varphi_1(x)$};
+		\draw (3cm,3cm) node {$y=\varphi_1(x)$};
 		\end{axis}
 	\end{tikzpicture}
 	\begin{tikzpicture}
-		\pgfplotsset{every axis plot/.append style={line width=1pt}}
+		\pgfplotsset{every axis plot/.append style={line width=1.5pt}}
 		\begin{axis}[
+			width=4cm, scale only axis,
 			xlabel=x,
 			ylabel=y,
 			xtick=\empty,
@@ -188,20 +195,19 @@
 			(0.75,	0.0)
 			(1.0,	0.0)
 			};
-		\draw (5.5cm,4cm) node {$y=\varphi_i(x)$};
+		\draw (3cm,3cm) node {$y=\varphi_i(x)$};
 		\end{axis}
 	\end{tikzpicture}
-
 	\begin{tikzpicture}
-		\pgfplotsset{every axis plot/.append style={line width=1pt}}
+		\pgfplotsset{every axis plot/.append style={line width=1.5pt}}
 		\begin{axis}[
+			width=4cm, scale only axis,
 			xlabel=x,
 			ylabel=y,
 			xtick=\empty,
 			ytick={0,1},
-			xtick={0,1},
 			extra x ticks={0.2, 0.4, 0.75},
-			extra x tick labels={$x_{i-1}$, $x_i$, $x_{i+1}$},
+			extra x tick labels={$x_{n-1}$, $x_n$, $1$},
 			axis x line=middle,
 			axis y line=middle]
 			\addplot[] coordinates {
@@ -211,17 +217,97 @@
 			(0.75,	0.0)
 			(1.0,	0.0)
 			};
-		\draw (5.5cm,4cm) node {$y=\varphi_i(x)$};
+		\draw (3cm,3cm) node {$y=\varphi_n(x)$};
 		\end{axis}
 	\end{tikzpicture}
-
 	\end{center}
+	Производные базисных функций будут кусочно-постоянными функциями и их
+	нетрудно найти:
+	\[
+	\varphi'_i(x) = 
+		\begin{cases}
+			0, & \text{если} \quad 0 \leq x \leq x_{i-1}, \\
+			\frac{1}{h_{i-1}}, & \text{если} \quad x_{i-1} < x \leq x_{i}, \\
+			-\frac{1}{h_i}, & \text{если} \quad x_i < x \leq x_{i+1}, \\
+			0, & \text{если} \quad x_{i+1} < x < 1~.
+		\end{cases},\quad i = \overline{1,n}
+	\]
+	Поскольку $i$-ая функция отлична от нуля только на промежутке 
+	$(x_{i-1},x_{i+1}]$, то справедливы равенства
+	\[
+		\varphi_i(x)\varphi_j(x) = 0 \quad\text{и}\quad 
+		\varphi'_i(x)\varphi'_j(x) = 0, \quad i,j = \overline{1,n}, 
+		\quad j\neq{i-1}, j \neq i, j \neq {i+1}.
+	\]
+	Последнее означает, что матрица системы уравнений для $c_j$ при таком
+	выборе базисных функций будет трехдиагональной. А именно, ненулевыми
+	будут элементы:
+	\begin{align*}
+		a_{i,i+1}& = \int\limits_0^1\left[
+				p(x)\varphi'_i(x)\varphi'_{i+1}(x) + 
+				q(x)\varphi_i(x)\varphi_{i+1}(x)
+				\right]dx = \\
+			 & = -\left(\frac{1}{h_i}\right)^2
+				\int\limits_{x_i}^{x_{i+1}}p(x)dx + 
+				\underbrace{\left(\frac{1}{h_i}\right)^2
+				\int\limits_{x_i}^{x_{i+1}}{\left(x_{i+1}-x\right)\left(x-x_i\right)q(x)}dx}_
+				{\displaystyle I_{1,i}}~,\quad i = \overline{1,n-1}~.
+	\end{align*}
+	\begin{align*}
+		a_{ii}& = \int\limits_0^1\left[
+			p(x)\left(\varphi'_i(x)\right)^2 + 
+			q(x)\varphi_i^2(x)\right]dx = \\
+		      & = \left(\frac{1}{h_{i-1}}\right)^2
+				\int\limits_{x_{i-1}}^{x_i}p(x)dx + 
+				\left(\frac{1}{h_i}\right)^2
+				\int\limits_{x_i}^{x_{i+1}}p(x)dx + \\
+		      & + \underbrace{\left(\frac{1}{h_{i-1}}\right)^2
+		      	\int\limits_{x_{i-1}}^{x_i}{\left(x-x_{i-1}\right)^2q(x)}dx}_
+			{\displaystyle I_{2,i}} +
+			  \underbrace{\left(\frac{1}{h_i}\right)^2
+			\int\limits_{x_i}^{x_{i+1}}{\left(x_{i+1}-x\right)^2q(x)}dx}_
+			{\displaystyle I_{3,i}}~, \quad i = \overline{1,n}~,
+	\end{align*}
+	\begin{align*}
+		a_{i,i-1}& = \int\limits_0^1\left[
+				p(x)\varphi'_i(x)\varphi'_{i-1}(x) + 
+				q(x)\varphi_i(x)\varphi_{i-1}(x)
+				\right]dx = \\
+			 & = - \underbrace{\left(\frac{1}{h_{i-1}}\right)^2
+				\int\limits_{x_{i-1}}^{x_i}p(x)dx}_{\displaystyle
+				I_{4,i}}+ 
+				\left(\frac{1}{h_{i-1}}\right)^2
+				\int\limits_{x_{i-1}}^{x_i}{\left(x_i-x\right)\left(x-x_{i-1}\right)q(x)}dx~, 
+				\quad i = \overline{2,n}~,
+	\end{align*}
 
+	Столбец правых частей будет состоять из элементов вида
+	\[
+		b_i = \int\limits_0^1{f(x)\varphi_i(x)}dx = 
+		\underbrace{\frac{1}{h_{i-1}}
+			\int\limits_{x_{i-1}}^{x_i}\left(x-x_{i-1}\right)f(x)dx}_{\displaystyle	I_{5,i}}
+		+
+		\underbrace{\frac{1}{h_i}
+			\int\limits_{x_i}^{x_{i+1}}\left(x_{i+1}-x\right)f(x)dx}_{\displaystyle I_{6,i}},
+		\quad i=\overline{1,n}~.
+	\]
+	Используя введенные выше обозначения для некоторых интегралов, эти же
+	выражения можно кратко записать следующим образом:
+	\begin{align*}
+		a_{ii}& 	= I_{4,i} + I_{4,i+1} + I_{2,i} + I_{3,i}, \quad
+							i = \overline{2,n}, \\
+		a_{i,i+1}&	= -I_{4,i+1} + I_{1,i}, \quad i =
+							\overline{1,n-1}, \\
+		a_{i,i-1}&	= -I_{4,i} + I_{1, i-1}, \quad i=\overline{2,n}, \\
+		b_i&		= I_{5,i} + I_{6,i}, \quad i = \overline{1,n}~.
+	\end{align*}
+	Итак, чтобы построить трехдиагональную систему линейных уравнений,
+	необходимо вычислить $6n$ интегралов. Для некоторых задач это можно
+	сделать аналитически, но чаще приходится прибегать к численным методам
+	интегрирования (например, можно использовать правило Симпсона, см. Приложение).
 
-
-
-
-
+	Запишем теперь формальный алгоритм метода Ритца с кусочно-линейным
+	базисом.
 \end{document}
 
 
