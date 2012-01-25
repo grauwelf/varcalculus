@@ -7,6 +7,7 @@
 \usepackage{amsthm}
 \usepackage{pgfplots}
 \usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=1.5cm]{geometry}
+\usepackage[ruled, vlined]{algorithm2e}
 
 \begin{document}
 
@@ -308,6 +309,22 @@
 
 	Запишем теперь формальный алгоритм метода Ритца с кусочно-линейным
 	базисом.
+
+	\begin{algorithm}[H]
+		\dontprintsemicolon
+		\NoCaptionOfAlgo
+		\SetKwInOut{Input}{ВХОД}\SetKwInOut{Output}{ВЫХОД}
+
+		\Input{Целое число $n \geq 1$; точки $x_0=0<x_1< 
+				\dots <x_n<x_{n+1}=1$.}
+		\Output{Коэффициенты $c_1, \dots, c_n$.}
+		\BlankLine
+		\nlset{ШАГ 1} mcvmskv \;
+		\nlset{ШАГ 2} mcvmskv \;
+		\nlset{ШАГ 3} mcvmskv \;
+
+		\caption{Кусочно-линейный метод Ритца}
+	\end{algorithm}
 \end{document}
 
 
