@@ -7,7 +7,7 @@
 \usepackage{amsthm}
 \usepackage{pgfplots}
 \usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=1.5cm]{geometry}
-\usepackage[ruled, vlined]{algorithm2e}
+\usepackage[ruled]{algorithm2e}
 
 \begin{document}
 
@@ -15,6 +15,7 @@
 \newtheorem*{Th}{Теорема}
 \newtheorem*{Lem}{Лемма}
 \newtheorem*{Note}{Замечание}
+\newtheorem*{Ex}{Пример}
 
 \section{Метод Ритца}	
 	Выделяют два основных типа методов решения вариационных задач.
@@ -309,22 +310,88 @@
 
 	Запишем теперь формальный алгоритм метода Ритца с кусочно-линейным
 	базисом.
-
+	\pagebreak
 	\begin{algorithm}[H]
 		\dontprintsemicolon
-		\NoCaptionOfAlgo
-		\SetKwInOut{Input}{ВХОД}\SetKwInOut{Output}{ВЫХОД}
+		\nocaptionofalgo
+		\SetKwInOut{Input}{ВХОД} 
+		\SetKwInOut{Output}{ВЫХОД}
+		\SetKwInOut{KwPrint}{ВЫВЕСТИ}
 
 		\Input{Целое число $n \geq 1$; точки $x_0=0<x_1< 
 				\dots <x_n<x_{n+1}=1$.}
+		\BlankLine
 		\Output{Коэффициенты $c_1, \dots, c_n$.}
 		\BlankLine
-		\nlset{ШАГ 1} mcvmskv \;
-		\nlset{ШАГ 2} mcvmskv \;
-		\nlset{ШАГ 3} mcvmskv \;
+		\nlset{ШАГ 1} 	\For{$i \leftarrow 0$ \KwTo $n$}{
+					$h_i \leftarrow x_{i+1}-x_i$
+				} \;
+		\nlset{ШАГ 2} \For{$i \leftarrow 1$ \KwTo $n$}{
+					Определяем базисные функции $\varphi_i$:
+					$ \displaystyle \varphi_i(x) = 
+					\begin{cases}
+						0, & \text{если} \quad 0 \leq x \leq x_{i-1}, \\
+						\frac{1}{h_{i-1}}\left(x-x_{i-1}\right), & 
+							\text{если} \quad x_{i-1} < x \leq x_{i}, \\
+						\frac{1}{h_i}\left(x_{i+1}-x\right), & 
+							\text{если} \quad x_i < x \leq x_{i+1}, \\
+						0, & \text{если} \quad x_{i+1} < x < 1~.
+					\end{cases}$
+				} \;
+		\nlset{ШАГ 3} \For{$i \leftarrow 1$ \KwTo $n-1$}{
+					Вычисляем $I_{1,i}, I_{2,i}, I_{3,i},I_{4,i}, I_{5,i}, I_{6,i}$.
+				} \;
+				Вычисляем $I_{2,n},I_{3,n},I_{4,n},I_{4,n+1},I_{5,n},I_{6,n}$. \;
+		\nlset{ШАГ 4} \For{$i \leftarrow 1$ \KwTo $n-1$}{
+				$\alpha_i \leftarrow I_{4,i} + I_{4,i+1} + I_{2,i} + I_{3,i}$ \;
+				$\beta_i \leftarrow I_{1,i}-I_{4,i+1}$ \;
+				$b_i \leftarrow I_{5,i} + I_{6,i}$ \;	
+				} \;
+		\nlset{ШАГ 5} Вычисляем \;
+				\Indp {$\alpha_n \leftarrow I_{4,n}+I_{4,n+1}+I_{2,n}+I_{3,n}$ \;
+				$b_n \leftarrow I_{5,n}+I_{6,n}$ \;}
+				\Indm
+		\nlset{ШАГ 6} Начинаем решать трехдиагональную систему уравнений (шаги 6-10) \;
+				\Indp {
+					$a_1 \leftarrow \alpha_1$ \;
+					$\displaystyle \zeta_1 \leftarrow \frac{\beta_1}{\alpha_1}$ \;
+					$\displaystyle z_1 \leftarrow \frac{b_1}{a_1}$ \;
+				}
+				\Indm
+		\nlset{ШАГ 7} \For{$i \leftarrow 2$ \KwTo $n-1$}{
+				\Indp {
+					$a_i \leftarrow \alpha_i - \beta_{i-1}\zeta_{i-1}$ \;
+					$\displaystyle \zeta_i \leftarrow \frac{\beta_i}{a_i}$ \;
+					$\displaystyle z_i \leftarrow \frac{b_i
+					- \beta_{i-1}z_{i-1}}{a_i}$ \;
+				}
+				\Indm
+				} \;
+		\nlset{ШАГ 8} Вычисляем \;
+				\Indp { $a_n \leftarrow \alpha_n - \beta_{n-1}\zeta_{n-1}$ \;
+					$z_n \leftarrow	\frac{b_n-\beta_{n-1}z_{n-1}}{a_n}$ \;
+				} 
+				\Indm \;
+		\nlset{ШАГ 9} Полагаем $c_n \leftarrow z_n$ \;
+				\KwPrint{$c_n$} \;
+		\nlset{ШАГ 10} \For{$i \leftarrow n-1$ \KwTo $1$}{
+				\Indp {$c_i \leftarrow z_i - \zeta_ic_{i+1}$ \;
+				\KwPrint{$c_i$} \;
+				}
+				\Indm
+				} \;
+		\nlset{ШАГ 11} Процедура окончена.				
 
-		\caption{Кусочно-линейный метод Ритца}
+		\caption{\Large Кусочно-линейный метод Ритца}
 	\end{algorithm}
+	%\pagebreak
+
+	Рассмотрим пример использования этого алгоритма, в котором интегралы
+	(шаги 3, 4 и 5) находятся в явном виде.
+
+	\begin{Ex}
+		
+	\end{Ex}
 \end{document}
 
 
