@@ -318,8 +318,8 @@
 
 	\pagebreak
 	\begin{algorithm}[H]
-		\dontprintsemicolon
-		\nocaptionofalgo
+		\DontPrintSemicolon
+		\NoCaptionOfAlgo
 		\SetKwInOut{Input}{бунд} 
 		\SetKwInOut{Output}{бшунд}
 		\SetKwInOut{KwPrint}{бшбеярх}
@@ -520,19 +520,25 @@
 	\begin{center}
 	\begin{tikzpicture}
 		\begin{axis}[
-			minor tick num=1,
+			%axis equal image=true,	
+			%scale=2,
+			y=3cm,
+			axis equal=false,
+			%minor tick num=1,
 			axis x line=middle,
 			axis y line=middle,
 			xlabel=$x$,ylabel=$y$,
-			xmin=-3,xmax=3
+			xmin=-4, xmax=4,
+			ymin=0, ymax=1.25
 			]
-			\addplot[blue,domain=-3:-2] {0};
-			\addplot[blue,domain=2:3] {0};
-			\addplot[blue,domain=-2:-1] {0.25*(2+x)^3};
-			\addplot[blue,domain=1:2] {0.25*(2-x)^3};
-			%\addplot[blue,domain=-3:-2] {0};
-			%\addplot[blue,domain=-3:-2] {0};
-
+			\addplot[blue, ultra thick, domain=-4:-2] 	{0};
+			\addplot[blue, ultra thick, domain=2:4] 	{0};
+			\addplot[blue, ultra thick, domain=-2:-1] 	{0.25*(2+x)^3};
+			\addplot[blue, ultra thick, domain=1:2] 	{0.25*(2-x)^3};
+			\addplot[blue, ultra thick, domain=-1:0] 	{0.25*((2+x)^3-4*(1+x)^3)};
+			\addplot[blue, ultra thick, domain=0:1] 	{0.25*((2-x)^3-4*(1-x)^3)};
+			\draw (5cm, 2.75cm)  node {$y=S(x)$};
+			
 		\end{axis}
 	\end{tikzpicture}
 	\end{center}
