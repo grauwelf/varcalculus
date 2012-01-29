@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{mathtools}
 \usepackage{pgfplots}
 \usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=1.5cm]{geometry}
 \usepackage[ruled]{algorithm2e}
@@ -516,7 +517,20 @@
 		S''(x_0)=S''(x_4)=0 \quad \text{и} \quad
 			S'(x_0)=S'(x_4)=0\,.
 	\]
-	
+	Определим функцию $S(x) \in C^2_{(-\infty, \infty)}$ следующим образом:
+	\[
+		S(x)=
+		\begin{cases}
+			0 ,						& \text{если}\quad x \leq 2 ,\\
+			\frac{1}{4}(2+x)^3 ,				& \text{если}\quad -2 < x \leq -1 ,\\
+			\frac{1}{4}\left[(2+x)^3-4(1+x)^3\right] ,	& \text{если}\quad -1 < x \leq 0 ,\\
+			\frac{1}{4}\left[(2-x)^3-4(1-x)^3\right] ,	& \text{если}\quad 0 < x \leq 1 ,\\
+			\frac{1}{4}(2-x)^3 ,				& \text{если}\quad 1 < x \leq 2,\\
+			0 ,						& \text{если}\quad x > 2.
+		\end{cases}
+	\]
+	График ее изображен на рисунке ниже. Эта функция используется при построении
+	базисных функций.
 	\begin{center}
 	\begin{tikzpicture}
 		\begin{axis}[
@@ -542,9 +556,123 @@
 		\end{axis}
 	\end{tikzpicture}
 	\end{center}
+	Разобъем промежуток $[0,1]$, задавшись натуральным $n$ и определив шаг 
+	равномерного разбиения $h = \dfrac{1}{n+1}$ так, что $x_i = ih, i=\overline{0,n+1}$.
+	Базисные функции опредяются следующим образом:
+	\[
+		\varphi_i(x)=
+		\begin{dcases}
+			S\left(\dfrac{x}{h}\right)-4S\left(\dfrac{x+h}{h}\right) , & 
+				\text{если} \quad i=0 ,\\
+			S\left(\dfrac{x-h}{h}\right)-S\left(\dfrac{x+h}{h}\right) , & 
+				\text{если} \quad i=1 ,\\
+			S\left(\dfrac{x-ih}{h}\right) , &
+				\text{если} \quad 2 \leq i \leq n-1 ,\\
+			S\left(\dfrac{x-nh}{h}\right)-S\left(\dfrac{x-(n+2)h}{h}\right) , &
+				\text{если} \quad i=n ,\\
+			S\left(\dfrac{x-(n+1)h}{h}\right)-4S\left(\dfrac{x-(n+2)h}{h}\right) , &
+				\text{если} \quad i=n+1 .
+		\end{dcases}
+	\]
+	Можно показать, что система функций $\left\{\varphi_i(x)\right\}_{i=0}^{n+1}$ 
+	линейно независима и каждая функция удовлетворяет однородным краевым условиям.
+	Ниже изображены графики пяти возможных типов базисных функций при заданном разбиении.
+	\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			y=3cm, x=1.5cm,
+			axis x line=left,
+			axis y line=left,
+			xlabel=$x$,ylabel=$y$,
+			xlabel near ticks,
+			ytick={1},
+			xtick={1, 2, 3, 4, 5},
+			xticklabels={$x_{i-2}$, $x_{i-1}$, $x_i$, $x_{i+1}$, $x_{i+2}$},
+			xmin=0.0, xmax=6.5,
+			ymin=0.0, ymax=1.25,
+			]
+			\addplot[blue, very thick, domain=1:5, samples=100] {exp(-1.5*(x-3)^2)};
+			\draw (7.5cm, 2.5cm)  node {$y=\varphi_i(x),\,\, i=\overline{2,n-1}$};
+		\end{axis}
+	\end{tikzpicture}
+	\end{center}
+	
+	\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			y=3cm, x=1.5cm,
+			axis x line=left,
+			axis y line=left,
+			xlabel=$x$,ylabel=$y$,
+			xlabel near ticks,
+			ytick={1},
+			xtick={1, 2, 3},
+			xticklabels={$x_1$, $x_2$, $x_3$},
+			xmin=0.0, xmax=3.5,
+			ymin=0.0, ymax=1.2,
+			]
+			\addplot[blue, very thick, domain=0:2, samples=20] {0.5*x^3-2*x^2+2*x};
+			\draw (3.2cm, 1.5cm)  node {$y=\varphi_0(x)$};
+		\end{axis}
+	\end{tikzpicture}
+	\begin{tikzpicture}
+		\begin{axis}[
+			y=3cm, x=1.5cm,
+			axis x line=left,
+			axis y line=left,
+			xlabel=$x$,ylabel=$y$,
+			xlabel near ticks,
+			ytick={1},
+			xtick={1, 2, 3},
+			xticklabels={$x_1$, $x_2$, $x_3$},
+			xmin=0.0, xmax=3.5,
+			ymin=0.0, ymax=1.2,
+			]
+			\addplot[blue, very thick, domain=0:3, samples=30] {0.25*x^3-1.5*x^2+9*x/4};
+			\draw (1.5cm, 1.5cm)  node {$y=\varphi_1(x)$};
+		\end{axis}
+	\end{tikzpicture}
+	\\
+	\begin{tikzpicture}
+		\begin{axis}[
+			y=3cm, x=1.5cm,
+			axis x line=left,
+			axis y line=left,
+			xlabel=$x$,ylabel=$y$,
+			xlabel near ticks,
+			ytick={1},
+			xtick={0, 1, 2, 3},
+			xticklabels={$x_{n-2}$, $x_{n-1}$, $x_n$, $1$},
+			xmin=0.0, xmax=3.5,
+			ymin=0.0, ymax=1.2,
+			]
+			\addplot[blue, very thick, domain=0:3, samples=30] {-(0.25*(x+1)^3-1.5*(x+1)^2+9*(x+1)/4-1)};
+			\draw (2.8cm, 1.5cm)  node {$y=\varphi_n(x)$};
+			
+		\end{axis}
+	\end{tikzpicture}
+	\begin{tikzpicture}
+		\begin{axis}[
+			y=3cm, x=1.5cm,
+			axis x line=left,
+			axis y line=left,
+			xlabel=$x$,ylabel=$y$,
+			xlabel near ticks,
+			ytick={1},
+			xtick={1, 2, 3},
+			xticklabels={$x_{n-1}$, $x_n$, $1$},
+			xmin=0.0, xmax=3.5,
+			ymin=0.0, ymax=1.2,
+			]
+			\addplot[blue, very thick, domain=1:5, samples=100] {2.35*(-0.2*x^3+x^2-7*x/5+3/5)};
+			\draw (1.0cm, 1.5cm)  node {$y=\varphi_{n+1}(x)$};
+		\end{axis}
+	\end{tikzpicture}
+	\\
+	\end{center}
+
 
 \end{document}
-
 
 
 
