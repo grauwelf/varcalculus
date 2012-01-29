@@ -516,7 +516,26 @@
 		S''(x_0)=S''(x_4)=0 \quad \text{è} \quad
 			S'(x_0)=S'(x_4)=0\,.
 	\]
+	
+	\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			minor tick num=1,
+			axis x line=middle,
+			axis y line=middle,
+			xlabel=$x$,ylabel=$y$,
+			xmin=-3,xmax=3
+			]
+			\addplot[blue,domain=-3:-2] {0};
+			\addplot[blue,domain=2:3] {0};
+			\addplot[blue,domain=-2:-1] {0.25*(2+x)^3};
+			\addplot[blue,domain=1:2] {0.25*(2-x)^3};
+			%\addplot[blue,domain=-3:-2] {0};
+			%\addplot[blue,domain=-3:-2] {0};
 
+		\end{axis}
+	\end{tikzpicture}
+	\end{center}
 
 \end{document}
 
