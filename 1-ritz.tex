@@ -332,7 +332,7 @@
 		\BlankLine
 		\nlset{ШАГ 1} 	\For{$i \leftarrow 0$ \KwTo $n$}{
 					$h_i \leftarrow x_{i+1}-x_i$
-				} \;
+				}
 		\nlset{ШАГ 2} \For{$i \leftarrow 1$ \KwTo $n$}{
 					Определяем базисные функции $\varphi_i$:
 					$ \displaystyle \varphi_i(x) = 
@@ -344,16 +344,16 @@
 							\text{если} \quad x_i < x \leq x_{i+1}, \\
 						0, & \text{если} \quad x_{i+1} < x < 1~.
 					\end{cases}$
-				} \;
+				}
 		\nlset{ШАГ 3} \For{$i \leftarrow 1$ \KwTo $n-1$}{
 					Вычисляем $I_{1,i}, I_{2,i}, I_{3,i},I_{4,i}, I_{5,i}, I_{6,i}$.
-				} \;
+				}
 				Вычисляем $I_{2,n},I_{3,n},I_{4,n},I_{4,n+1},I_{5,n},I_{6,n}$. \;
 		\nlset{ШАГ 4} \For{$i \leftarrow 1$ \KwTo $n-1$}{
 				$\alpha_i \leftarrow I_{4,i} + I_{4,i+1} + I_{2,i} + I_{3,i}$ \;
 				$\beta_i \leftarrow I_{1,i}-I_{4,i+1}$ \;
 				$b_i \leftarrow I_{5,i} + I_{6,i}$ \;	
-				} \;
+				}
 		\nlset{ШАГ 5} Вычисляем \;
 				\Indp {$\alpha_n \leftarrow I_{4,n}+I_{4,n+1}+I_{2,n}+I_{3,n}$ \;
 				$b_n \leftarrow I_{5,n}+I_{6,n}$ \;}
@@ -373,20 +373,19 @@
 					- \beta_{i-1}z_{i-1}}{a_i}$ \;
 				}
 				\Indm
-				} \;
+				}
 		\nlset{ШАГ 8} Вычисляем \;
 				\Indp { $a_n \leftarrow \alpha_n - \beta_{n-1}\zeta_{n-1}$ \;
 					$\displaystyle z_n \leftarrow	\frac{b_n-\beta_{n-1}z_{n-1}}{a_n}$ \;
 				} 
-				\Indm \;
-		\nlset{ШАГ 9} Полагаем $c_n \leftarrow z_n$ \;
-				\KwPrint{$c_n$} \;
-		\nlset{ШАГ 10} \For{$i \leftarrow n-1$ \KwTo $1$}{
-				\Indp {$c_i \leftarrow z_i - \zeta_ic_{i+1}$ \;
-				\KwPrint{$c_i$} \;
-				}
 				\Indm
-				} \;
+		\nlset{ШАГ 9} Полагаем $c_n \leftarrow z_n$ \;
+				\KwPrint{$c_n$} 
+		\nlset{ШАГ 10} \For{$i \leftarrow n-1$ \KwTo $1$}{
+				\Indp 	{$c_i \leftarrow z_i - \zeta_ic_{i+1}$ \;
+					\KwPrint{$c_i$}
+					} \Indm
+				} 
 		\nlset{ШАГ 11} Процедура окончена.				
 
 		\caption{\Large Кусочно-линейный метод Ритца}
@@ -670,8 +669,184 @@
 	\end{tikzpicture}
 	\\
 	\end{center}
+	Поскольку каждая функция $\varphi_i(x)$ вместе со своей производной
+	$\varphi'_i(x)$ отлична от нуля только на интервале $[x_{i-2}, x_{i+2}]$,
+	матрица системы для нахождения коэффициентов линейной комбинации
+	имеет ленточный вид:
+	\[A = \begin{pmatrix}
+		a_{00} & a_{01} & a_{02} & a_{03} & 0      & \hdotsfor{3} & 0 \\	
+		a_{10} & a_{11} & a_{12} & a_{13} & a_{14} & \ddots & & & \vdots \\
+		a_{20} & a_{21} & a_{22} & a_{23} & a_{24} & a_{25} & \ddots & & \vdots \\
+		a_{30} & a_{31} & a_{32} & a_{33} & a_{34} & a_{35} & a_{36} & \ddots & \vdots \\
+		0      & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots & 0 \\ 
+		\vdots & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots & a_{n-2,n+1} \\ 
+		\vdots &  & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots & a_{n-1,n+1} \\
+		\vdots &  &  & \ddots & \ddots & \ddots & \ddots & \ddots & a_{n, n+1} \\
+		0      & \hdotsfor{3}    & 0      & a_{n+1,n-2}     & a_{n+1,n-1}     & a_{n+1,n} &  a_{n+1,n+1}
+	\end{pmatrix}\,,\]
+	где 
+	\[
+		a_{ij} = \int\limits_0^1\left[
+			p(x)\varphi'_i(x)\varphi'_j(x) + q(x)\varphi_i(x)\varphi_j(x)
+		\right]dx\,, \quad i,j=\overline{0,n+1},
+	\]
+	а элементы столбца правых частей определяется как
+	\[
+		b_i = \int\limits_0^1f(x)\varphi_i(x)dx\,.
+	\]
+	Можно показать, что матрица $A$ является положительно определенной.
+	Значит, систему уравнений $Ac=b$ для неизвестных коэффицентов линейной аппроксимации
+	можно эффективно решить при помощи разложения Холецкого (конечно, можно
+	ограничиться и обычным методом Гаусса). 
 
+	Запишем теперь формальный алгоритм метода Ритца, использующего кубические сплайны.
+	\vspace{2em}\\
+	\begin{algorithm}[H]
+		\DontPrintSemicolon
+		\NoCaptionOfAlgo
+		\SetKwInOut{Input}{ВХОД} 
+		\SetKwInOut{Output}{ВЫХОД}
 
+		\Input{Целое число $n \geq 1$.}
+		\BlankLine
+		\Output{Коэффициенты $c_0, \dots, c_{n+1}$.}
+		\BlankLine
+		\nlset{ШАГ 1}	Определим шаг $h=\dfrac{1}{n+1}$. \;
+		\nlset{ШАГ 2} 	\For{$i \leftarrow 0$ \KwTo $n+1$}{
+					$x_i \leftarrow ih$
+				}
+				$x_{-2}, x_{-1} \leftarrow 0$ \;
+				$x_{n+2}, x_{n+3} \leftarrow 1$\;
+		\nlset{ШАГ 3} Определим функцию $S(x)$:
+				$
+					S(x)=
+					\begin{cases}
+						0 ,						
+							& \text{если}\quad x \leq 2 ,\\
+						\frac{1}{4}(2+x)^3 ,				
+							& \text{если}\quad -2 < x \leq -1 ,\\
+						\frac{1}{4}\left[(2+x)^3-4(1+x)^3\right] ,	
+							& \text{если}\quad -1 < x \leq 0 ,\\
+						\frac{1}{4}\left[(2-x)^3-4(1-x)^3\right] ,	
+							& \text{если}\quad 0 < x \leq 1 ,\\
+						\frac{1}{4}(2-x)^3 ,				
+							& \text{если}\quad 1 < x \leq 2,\\
+						0 ,						
+							& \text{если}\quad x > 2.
+					\end{cases}
+				$ \;
+		\nlset{ШАГ 4}	Определяем базисные функции $\left\{\varphi_i\right\}_{i=0}{n+1}$:
+					
+				$\varphi_0(x)  = 
+						S\left(\dfrac{x}{h}\right)-4S\left(\dfrac{x+h}{h}\right)$, \;
+				$\varphi_1(x)  = 
+						S\left(\dfrac{x-x_1}{h}\right)-S\left(\dfrac{x+h}{h}\right)$, \;
+				\For{$i \leftarrow 2$ \KwTo $n-1$}{
+					$ \varphi_i(x) = S\left(\dfrac{x-x_i}{h}\right)$
+				}
+				$\varphi_n(x)  = 
+						S\left(\dfrac{x-x_n}{h}\right)-S\left(\dfrac{x-(n+2)h}{h}\right)$, \;
+				$\varphi_{n+1}(x)  = 
+						S\left(\dfrac{x-x_{n+1}}{h}\right)-4S\left(\dfrac{x-(n+2)h}{h}\right)$.
+				\;
+			\caption{\Large Метод Ритца, использующий кубические сплайны.}
+		\end{algorithm}
+		
+		\begin{algorithm}[H]
+			\DontPrintSemicolon
+			\NoCaptionOfAlgo
+			\SetKwInOut{KwPrint}{ВЫВЕСТИ}
+			\SetKwFor{uuFor}{}{}{end}
+
+		\nlset{ШАГ 5} \For{$i \leftarrow 0$ \KwTo $n+1$}{
+				\nlset{5.1} \For{$j \leftarrow i$ \KwTo $\min[i+3,n+1]$}{
+					$L \leftarrow \max[x_{j-2},0]$ \;
+					$U \leftarrow \min[x_{j+2},1]$ \;
+					$\displaystyle 
+						a_{ij} = \int\limits_L^U\left[p(x)\varphi'_i(x)\varphi'_j(x) + 
+						q(x)\varphi_i(x)\varphi_j(x)\right]dx$ \;
+					\If{$i \neq j$}{
+						$a_{ji} \leftarrow a_{ij}$
+					}
+				} 
+				\nlset{5.2} 
+					\If{$i \geq 4$}{
+						\For{$j \leftarrow 0$ \KwTo $i-4$}{
+							$a_{ij} \leftarrow 0$
+						}
+				} 
+				\nlset{5.3} 
+					\If{$i \leq n-3$}{
+						\For{$j \leftarrow i+4$ \KwTo $n+1$}{
+							$a_{ij} \leftarrow 0$
+						}
+				} 
+				\nlset{5.4} $L \leftarrow \max[x_{i-2},0]$ \;
+					    $U \leftarrow \min[x_{i+2},1]$ \;
+					    $\displaystyle 
+					    	b_i = \int\limits_L^Uf(x)\varphi_i(x)dx$\,.
+				}
+		\nlset{ШАГ 6} Решаем систему линейных уравнений $Ac=b$, где $A=(a_{ij})$,
+				$b=\left(b_0, \dots, b_{n+1}\right)^T$ и 
+				$c=\left(c_0, \dots, c_{n+1}\right)^T$. 
+			\;
+		\nlset{ШАГ 7} \For{$i \leftarrow 0$ \KwTo $n+1$}{
+				\KwPrint{$c_i$}
+				}
+		\nlset{ШАГ 8} Процедура окончена.				
+
+	\end{algorithm}
+	\vspace{2em}
+	Отметим, что численное интегрирование на шагах 5.1 и 5.4 рекомендуется
+	выполнять следующим образом. Во-первых, необходимо построить интерполяционные
+	кубические сплайны для функций $p(x), f(x), q(x)$. Во-вторых,
+	с их помощью построить аппроксимацию подынтегральных выражений. В результате
+	под знаком интеграла окажется полином, который можно легко проинтегрировать 
+	на каждом из подынтервалов в явном виде.
+
+	Рассмотрим в качестве примера применения последнего алгоритма задачу, уже
+	решенную припомощи кусочно-линейной аппроксимации.
+	\begin{Ex}
+		Минимизировать функционал
+		\[
+			V[y] = \int\limits_0^1{\left(\left[y'(x)\right]^2 +
+			\pi^2y^2(x) - 4\pi^2\sin{\pi x}\right)}dx\,,
+		\]
+		на множестве $C^2_{[0,1]}$ при заданных граничных условиях $y(0) = y(1) = 0$. 
+	\end{Ex}
+	\begin{Sol}
+		Чтобы иметь возможность сравнить результат с предыдущим,
+		положим $n=9$. Тогда мы получим значения аппроксимации решения вариационной
+		задачи в тех же точках. Следующая таблица демонстрирует результаты
+		применения описанного выше алгоритма.
+		\begin{center}
+			\setlength{\tabcolsep}{12pt}
+			\begin{tabular}{cccccc}
+				$i$ & $c_i$ & $x_i$ & $\varphi(x_i)$ & $y(x_i)$ & $\left|\varphi(x_i)-y(x_i)\right|$
+				\\[4pt]
+				\hline
+				$0$   & $0.509644 \times 10^{-5}$  & $0.0$ & $0.000000$ & $0.000000$ &	$0.00000000$ \\
+				$1$   & $0.209426$  & $0.1$ & $0.309016$ & $0.309017$ &	   $0.00000055$ \\
+ 				$2$   & $0.398356$  & $0.2$ & $0.587785$ & $0.587785$ &    $0.00000024$ \\
+				$3$   & $0.548289$  & $0.3$ & $0.809017$ & $0.809017$ &    $0.00000012$ \\
+				$4$   & $0.644554$  & $0.4$ & $0.951057$ & $0.951057$ &    $0.00000015$ \\
+				$5$   & $0.677723$  & $0.5$ & $1.000000$ & $1.000000$ &    $0.00000020$ \\
+				$6$   & $0.644554$  & $0.6$ & $0.951057$ & $0.951057$ &    $0.00000061$ \\
+				$7$   & $0.548290$  & $0.7$ & $0.809017$ & $0.809017$ &    $0.00000074$ \\
+				$8$   & $0.398357$  & $0.8$ & $0.587785$ & $0.587785$ &    $0.00000165$ \\
+				$9$   & $0.209426$  & $0.9$ & $0.309016$ & $0.309017$ &	   $0.00000111$ \\
+				$10$  & $0.749313 \times 10^{-5}$  & $1.0$ & $0.000000$ & $0.000000$ &	$0.00000000$ \\
+				[1pt]
+				\hline
+			\end{tabular}
+		\end{center}
+		\qed
+	\end{Sol}
+	
+	Можно показать, что точность аппроксимации решения вариационной задачи 
+	кубическими B-сплайнами имеет порядок $O(h^4)$. Метод, конечно, можно обобщить
+	и на неравномерную сетку, однако алгоритм составления системы уравнений
+	при этом значительно усложняется.
 \end{document}
 
 
