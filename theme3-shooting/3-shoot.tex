@@ -1,0 +1,307 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[warn] {mathtext}
+\usepackage[cp1251]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\usepackage{wrapfig}
+\usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=1.5cm]{geometry}
+\usepackage[ruled]{algorithm2e}
+
+\renewcommand\qedsymbol{$\blacksquare$}
+\renewcommand{\labelenumi}{\arabic{enumi}) }
+
+\begin{document}
+
+\newtheorem*{Def}{Определение}
+\newtheorem*{Th}{Теорема}
+\newtheorem*{Lem}{Лемма}
+\newtheorem*{Note}{Замечание}
+\newtheorem*{Ex}{Пример}
+
+\newenvironment{Sol}{\textbf{Решение.\linebreak}}
+
+\setcounter{section}{2}
+\section{Метод стрельбы}
+	В рассмотренном ранее методе конечных разностей краевая задача для уравнения
+	Эйлера заменялась ее конечно-разностной аппроксимацией. При этом решение последней
+	сводилось крешению системы линейных или нелинейных алгебраических уравнений.
+
+	Метод стрельбы (иногда также называемый баллистическим методом или 
+	методом начальных параметров) точно так же не решает краевую задачу в исходной
+	постановке, а сводит ее к последовательности более простых задач, а именно ---
+	задач Коши с особым образом сформулированными начальными условиями.
+
+	Как и ранее, мы рассмотрим вначале случай линейного уравнения Эйлера, поскольку
+	для него метод стрельбы принимает особо простой вид. Позже перейдем к более
+	общему случаю. Одна сперва сформулируем условие существования и единственности
+	решения краевой задачи.
+
+	\begin{Th}
+
+	Рассмотрим краевую задачу
+	\[
+		y'' = f(x, y, y'), \qquad x \in [a, b], \quad y(a) = \alpha, y(b) = \beta .
+	\]
+	Если выполнены следующие условия:
+	\begin{enumerate}
+		\item функции $f, f_y, f_{y'}$ непрерывны в области 
+			$D = \left\{(x,y,y') | x \in [a,b], y \in \mathbb{R}, y' \in \mathbb{R} \right\}$;
+		\item $f_{y'} \geq \delta > 0$ на $D$;
+		\item $\exists M: M = \max\limits_D|f_{y'}(x,y,y')|$;
+	\end{enumerate}
+	то краевая задача имеет единственное решение.
+	\end{Th}
+
+	Заметим, что в данных указаниях мы не рассматриваем в деталях численные методы
+	решения задачи Коши. Предполагается, что этот материал уже известен
+	из курса численных методов, однако для справки в Приложении приводится схема
+	метода Рунге-Кутта 4-го порядка точности.
+
+\subsection{Метод конечных разностей в случае линейного уравнения Эйлера}
+
+	Пусть применение необходимого условия экстремума приводит к линейной
+	краевой задаче, которую мы запишем в виде
+	\[
+		\begin{cases}
+			&y''(x) = p(x)y'(x) + q(x)y(x) + r(x), \quad x \in \left[a, b\right], \\
+			& y(a) = \alpha, \quad y(b) = \beta .
+		\end{cases}
+	\]
+	Если предположить, что $p(x), q(x), r(x)$ непрерывны на отрезке $[a, b]$ и, 
+	кроме того, $q(x) > 0$, то эта задача имеет единственное решение в силу
+	сформулированной выше теоремы.
+	
+	Рассмотрим теперь две задачи Коши (т.е. задачи с начальными условиями):
+	\begin{equation}
+		\begin{cases}
+			&y''(x) = p(x)y'(x) + q(x)y(x) + r(x), \quad x \in \left[a, b\right], \\
+			& y(a) = \alpha, \quad y'(a) = 0,
+		\end{cases}
+	\end{equation}
+	и
+	\begin{equation}
+		\begin{cases}
+			&y''(x) = p(x)y'(x) + q(x)y(x), \quad x \in \left[a, b\right], \\
+			& y(a) = 0, \quad y'(a) = 1.
+		\end{cases}
+	\end{equation}
+
+	В силу наложенных ограничений на правую часть уравнений, обе задачи 
+	имеют единственное решение. Обозначим через $y_1(x)$ решение задачи (1), а
+	через $y_2(x)$ --- задачи (2). Предполагая, что $y_2(b) \neq 0$, определим
+	функцию
+	\[
+		y(x) = y_1(x) + \frac{\beta - y_1(b)}{y_2(b)}y_2(x) .
+	\]
+	Заметим, что $y_2(b) = 0$ противоречит условиям, сформулированным выше.
+
+	Легко показать, что $y(x)$ является решением исходной краевой задачи.
+	Действительно, найдем производные функции $y(x)$:
+	\begin{align*}
+		&y'(x) = y'_1(x) + \frac{\beta - y_1(b)}{y_2(b)}y'_2(x), \\
+		&y''(x) = y''_1(x) + \frac{\beta - y_1(b)}{y_2(b)}y''_2(x) \\
+	\end{align*}
+	и подставим эти выражения в уравнение Эйлера:
+	\[
+		\begin{array}{lcl}
+			y''(x) &=& \left[p(x)y'_1(x) + q(x)y_1(x) + r(x)\right] + 
+				\dfrac{\beta - y_1(b)}{y_2(b)}\left[p(x)y'_2(x) + q(x)y_2(x)\right] = \\ \\
+			&=& p(x)\left[y'_1(x) + \dfrac{\beta - y_1(b)}{y_2(b)}y'_2(x)\right] + 
+			q(x)\left[y_1(x) + \dfrac{\beta - y_1(b)}{y_2(b)}y_2(x)\right] + r(x) = \\ \\
+			&=& p(x)y'(x) + q(x)y(x) + r(x) .
+		\end{array}
+	\]
+
+
+	Кроме того, 
+	\[
+		y(a) = y_1(a) + \frac{\beta - y_1(b)}{y_2(b)}y_2(a) = 
+			\alpha + \frac{\beta-y_1(b)}{y_2(b)}\cdot 0 = \alpha ,
+	\]
+	и
+	\[
+		y(b) = y_1(b) + \frac{\beta - y_1(b)}{y_2(b)}y_2(b) = \beta .
+	\]
+
+	Таким образом, решение краевой задачи (а значит, и вариационной задачи)
+	свелось к решению двух задач Коши. Дадим небольшую графическую иллюстрацию
+	метода:
+
+	\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			%axis equal image=true,	
+			%scale=2,
+			y=2cm,
+			axis equal=false,
+			axis x line=middle,
+			axis y line=left,
+			xlabel=$x$,ylabel=$y$,
+			xmin=0, xmax=1.25,
+			ymin=-1, ymax=2.25,
+			xtick={0.05, 0.95},
+			ytick={0, 2},
+			xticklabels={$a$, $b$},
+			yticklabels={$\alpha$, $\beta$}
+			]
+			\addplot[blue, ultra thick, domain=0:1] 	{-0.25*(exp(2*x) - exp(-2*x)) + x};
+			\addplot[blue, ultra thick, domain=0:1] 	{0.25*(exp(2*x) - exp(-2*x))};
+			\addplot[black, ultra thick, domain=0:1] 	{(exp(2*x)-exp(-2*x))/(exp(2)-exp(-2))+x};
+			\addplot[black, dashed, mark=''] plot coordinates { (1, -1) (1, 2.25) };
+			\addplot[black, dashed, mark=''] plot coordinates { (0, 2) (1.25 ,2) };
+			\addplot[black, dashed, mark=''] plot coordinates { (0, 0) (1.25, 1.25)};
+
+			\node at (3cm, 1cm) {$y=y_1(x)$};
+			\node at (5.8cm, 4.5cm  ) {$y=y_2(x)$};
+			\node at (3.5cm, 5cm  ) {$y=y(x)$};
+			\node at (2.8cm, 2.4cm  ) {$\tg(\alpha)=1$};
+			
+		\end{axis}
+	\end{tikzpicture}
+	\end{center}
+	Заметим, что точность метода в линейном случае определяется точностью решение задач Коши.
+
+	Ниже приведен пример, который можно использовать при отладке.
+	\begin{Ex}
+		Решим краевую задачу для уравнения Эйлера
+		\[
+		\begin{cases}
+			& y'' = 4(y-x), \quad x \in [0,1] \\
+			& y(0) = 0, \quad y(1) = 2
+		\end{cases}
+		\]
+	\end{Ex}
+	\begin{Sol}
+		Заметим, что в этом уравнении $p(x) = 0$, $q(x) = 4 > 0$, $r(x) = -4x$. 
+		Таким образом, условия теоремы выполняются и задача имеет решение и притом
+		единственное.
+
+		Рассмотрим, согласно изложенной схеме метода, две задачи Коши:
+
+		\[
+		\begin{cases}
+			&y_1'' = 4y_1' - 4x, \quad x \in \left[0, 1\right], \\
+			& y_1(0) = 0, \quad y_1'(0) = 0,
+		\end{cases}
+		\]
+		и
+		\[
+		\begin{cases}
+			&y_2''(x) = 4y_2, \quad x \in \left[0, 1\right], \\
+			& y_2(0) = 0, \quad y_2'(0) = 1.
+		\end{cases}
+		\]
+		
+		Нетрудно найти решение этих задач:
+		\[
+			y_1(x) =-\frac{1}{4}\left(e^{2x} - e^{-2x}\right) + x ,	\qquad 
+			y_2(x) = \frac{1}{4}\left(e^{2x} - e^{-2x}\right).
+		\]
+		Осталось составить решение краевой задачи:
+		\[
+			y(x) = y_1(x) + \frac{2 - y_1(1)}{y_2(1)}y_2(x) = 
+			\frac{e^{2x}-e^{-2x}}{e^2 - e^{-2}} + x .
+		\]
+	\end{Sol}
+
+	
+\subsection{Метод стрельбы для уравнения Эйлера общего вида}
+	
+	Попробуем применить изложенную идею к краевой задаче более общего вида:
+	\[
+		\begin{cases}
+			&y'' = f(x, y, y'), \quad x \in \left[a, b\right], \\
+			& y(a) = \alpha, \quad y(b) = \beta .
+		\end{cases}
+	\]
+	Задавшись некоторым произвольным значением $t_0$, рассмотрим задачу Коши вида
+	\[
+		\begin{cases}
+			&y'' = f(x, y, y'), \quad x \in \left[a, b\right], \\
+			& y(a) = \alpha, \quad y'(a) = t_0 .
+		\end{cases}
+	\]
+	Пусть $y(x; t_0)$ --- ее решение. Очевидно, что, вообще говоря, $y(b; t_0) \neq \beta$.
+	На рисунке ниже приведена геометрическая интерпретация того, что произошло: выбрав угол
+	наклона <<пушки>> равным $t_0$, мы попали не в цель --- точку $(b, \beta)$, --- а
+	в точку $(b, y(b; t_0))$.
+	Фактически, метод стрельбы сводит краевую задачу (а значит, и вариаиционную 
+	задачу тоже) к решению трансцендетного уравнения 
+	\[
+		y(x; t) = \beta
+	\]
+	относительно параметра $t$, имеющего смысл угла наклона касательной к графику решения в
+	начальной точке.
+
+	\begin{wrapfigure}{r}{9cm}
+	\begin{tikzpicture}
+		\begin{axis}[
+			%axis equal image=true,	
+			%scale=10,
+			%y=2cm,
+			height=8cm,
+			width=8cm,
+			axis equal=false,
+			axis x line=middle,
+			axis y line=left,
+			xlabel=$x$,ylabel=$y$,
+			xmin=-0.5, xmax=3,
+			%ymin=0, ymax=6,
+			xtick={0.0, 2.5},
+			ytick={1, 6.842},
+			xticklabels={$a$, $b$},
+			yticklabels={$\alpha$, $\beta$}
+			]
+			\addplot[blue, ultra thick, domain=0:2.5] 	{exp(x/1.5)};
+			\addplot[black, ultra thick, domain=0:2.5] 	{exp(x/1.3)};
+			\addplot[blue, ultra thick, domain=0:2.5] 	{exp(x/1.2)};
+			\addplot[blue, ultra thick, domain=0:2.5] 	{exp(x/1.6)};
+			\addplot[blue, ultra thick, domain=0:2.5] 	{exp(x/1)};
+			\addplot[black, dashed, mark=''] plot coordinates { (0, 0) (0, 1) };
+			\addplot[black, dashed, mark=''] plot coordinates { (-0.5, 1) (0, 1) };
+			\addplot[black, dashed, mark=''] plot coordinates { (2.5, 0) (2.5, 14) };
+			\addplot[black, dashed, mark=''] plot coordinates { (-0.5, 6.842) (2.5, 6.842) };
+
+			\node at (5.8cm, 0.7cm) {$y(x; t_0)$};
+			\node at (5.8cm, 0.7cm) {$y(x; t_1)$};
+			\node at (5.8cm, 0.7cm) {$y(x; t_2)$};
+			\node at (5.8cm, 0.7cm) {$y(x; t_)$};
+			\node at (5.8cm, 0.7cm) {$y(x$};
+			
+		\end{axis}
+	\end{tikzpicture}
+	\end{wrapfigure}
+	Вообще говоря, для решения этого уравнения пригоден любой удобный метод.
+	Мы рассмотрим подробно применение метода Ньютона, с которым уже познакомились в 
+	лабораторной работе №2.
+
+	Итак, напомним, в методе Ньютона строится последовательность
+	\[
+		x^{k+1} = x^k - J^{-1}\left(x^k\right)f\left(x^k\right) ,
+	\]
+	которая при определенных условиях сходится к решению уравнения (системы уравнений)
+	$f(x)=0$. Здесь $J(x) = \left(\dfrac{\partial f_i}{\partial x_j}\right)$ --- 
+	якобиан системы уравнений. В нашем случае формула итераций принимает, очевидно,
+	следующий вид
+	
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
