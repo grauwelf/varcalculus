@@ -28,7 +28,7 @@
 \section{Метод стрельбы}
 	В рассмотренном ранее методе конечных разностей краевая задача для уравнения
 	Эйлера заменялась ее конечно-разностной аппроксимацией. При этом решение последней
-	сводилось крешению системы линейных или нелинейных алгебраических уравнений.
+	сводилось к решению системы линейных или нелинейных алгебраических уравнений.
 
 	Метод стрельбы (иногда также называемый баллистическим методом или 
 	методом начальных параметров) точно так же не решает краевую задачу в исходной
@@ -229,8 +229,8 @@
 	На рисунке ниже приведена геометрическая интерпретация того, что произошло: выбрав угол
 	наклона <<пушки>> равным $t_0$, мы попали не в цель --- точку $(b, \beta)$, --- а
 	в точку $(b, y(b; t_0))$.
-	Фактически, метод стрельбы сводит краевую задачу (а значит, и вариаиционную 
-	задачу тоже) к решению трансцендетного уравнения 
+	Фактически, метод стрельбы сводит краевую задачу (а значит, и вариационную 
+	задачу тоже) к решению трансцендентного уравнения 
 	\[
 		y(x; t) = \beta
 	\]
@@ -249,7 +249,7 @@
 			axis x line=middle,
 			axis y line=left,
 			xlabel=$x$,ylabel=$y$,
-			xmin=-0.5, xmax=3,
+			xmin=-0.5, xmax=4,
 			%ymin=0, ymax=6,
 			xtick={0.0, 2.5},
 			ytick={1, 6.842},
@@ -262,16 +262,19 @@
 			\addplot[blue, ultra thick, domain=0:2.5] 	{exp(x/1.6)};
 			\addplot[blue, ultra thick, domain=0:2.5] 	{exp(x/1)};
 			\addplot[black, dashed, mark=''] plot coordinates { (0, 0) (0, 1) };
-			\addplot[black, dashed, mark=''] plot coordinates { (-0.5, 1) (0, 1) };
+			\addplot[black, dashed, mark=''] plot coordinates { (-0.5, 1) (3, 1) };
 			\addplot[black, dashed, mark=''] plot coordinates { (2.5, 0) (2.5, 14) };
 			\addplot[black, dashed, mark=''] plot coordinates { (-0.5, 6.842) (2.5, 6.842) };
+			\addplot[red, dashed, mark=''] plot coordinates { (0, 1) (3, 3)};
 
-			\node at (5.8cm, 0.7cm) {$y(x; t_0)$};
-			\node at (5.8cm, 0.7cm) {$y(x; t_1)$};
-			\node at (5.8cm, 0.7cm) {$y(x; t_2)$};
-			\node at (5.8cm, 0.7cm) {$y(x; t_)$};
-			\node at (5.8cm, 0.7cm) {$y(x$};
-			
+			\node at (5.3cm, 3.1cm) {$y(x)$};
+			\node at (5.3cm, 2cm) {$y(x; t_0)$};
+			\node at (5.3cm, 5.3cm) {$y(x; t_1)$};
+			\node at (5.3cm, 2.4cm) {$y(x; t_2)$};
+			\node at (5.3cm, 3.7cm) {$y(x; t_3)$};
+			\node at (3cm, 0.7cm) {$\alpha$};
+			\node at (2cm, 4cm) {$t = \tg\alpha$};
+
 		\end{axis}
 	\end{tikzpicture}
 	\end{wrapfigure}
@@ -287,7 +290,57 @@
 	$f(x)=0$. Здесь $J(x) = \left(\dfrac{\partial f_i}{\partial x_j}\right)$ --- 
 	якобиан системы уравнений. В нашем случае формула итераций принимает, очевидно,
 	следующий вид
-	
+	\[
+		t_{k+1} = t_k - \frac{y(b; t_k) - \beta}{\dfrac{d}{dt}y(b; t_k)}.
+	\]
+	Основную проблему составляет вычисление производной $\dfrac{d}{dt}y(b; t)$.
+	Оказывается, что для этого достаточно решить одну задачу Коши. Действительно, 
+	рассмотрим подробнее задачу
+	\[\label{cauchy1}
+		\begin{cases}
+			&y''(x; t) = f(x, y(x; t), y'(x; t)), \quad x \in [a, b] \\
+			&y(a; t) = \alpha, \quad y'(a; t) = t
+		\end{cases}\tag{*}
+	\]
+	Продифференцируем уравнение по $t$ (аргументы $y$ в правой части опускаем для простоты):
+	\[
+		\frac{\partial}{\partial t}y''(x; t) = 
+		\frac{\partial f(x, y, y')}{\partial x}\cdot\frac{\partial x}{\partial t} + 
+		\frac{\partial f(x, y, y')}{\partial y}\cdot\frac{\partial y}{\partial t} + 
+		\frac{\partial f(x, y, y')}{\partial y'}\cdot\frac{\partial y'}{\partial t}.
+	\]
+	Так как $t$ никак не связано с $x$, то первое слагаемое обращается в нуль. Дифференцирование
+	же начальных условий дает 
+	\[
+		\frac{\partial y(a; t)}{\partial t}=0, \qquad 
+		\frac{\partial y'(a; t)}{\partial t} = 1.
+	\]
+	Чтобы упростить обозначения, введем функцию $z(x;t) = \dfrac{\partial y(x; t)}{\partial t}$.
+	Предположим, что порядок дифференцирования по $t$ и $x$ можно поменять местами.
+	Получаем задачу Коши
+	\[\label{cauchy2}
+		\begin{cases}
+			&z''(x; t) = 
+			\dfrac{\partial f(x, y, y')}{\partial y}\cdot z(x; t) + 
+			\dfrac{\partial f(x, y, y')}{\partial y'}\cdot z'(x;t), \quad x \in [a, b] \\
+			&z(a; t) = 0, \quad z'(a; t) = 1,
+		\end{cases}\tag{**}
+	\]
+	в которой параметр $t$ уже не фигурирует явно.
+
+	Итак, последовательность приближений ${t_k}$ в методе Ньютона строится по формуле:
+	\[
+		t_{k+1} = t_k - \frac{y(b; t_k) - \beta}{z(x; t_k)},
+	\]
+	где $z(x; t_k)$ --- решение задачи Коши (\refeq{cauchy2}), а $y(x; t_k)$ ---
+	задачи (\refeq{cauchy1}) при $t = t_k$. Таким образом, на каждой итерации необходимо
+	решить две задачи Коши.
+
+
+
+
+
+
 
 \end{document}
 
