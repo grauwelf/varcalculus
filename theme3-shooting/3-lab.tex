@@ -29,37 +29,35 @@
 
 \begin{trivlist}
 \itemindent=25pt
-	\item задачи a) --- используя алгоритм для линейного случая;
-	\item задачи b) --- используя алгоритм для общего случая;
-	\item задачу c) --- обобщив алгоритм на случай варииацонной задачи 
+	\item задачу a) --- используя алгоритм для линейного случая;
+	\item задачу b) --- используя алгоритм для общего случая;
+	\item задачу c) --- обобщив алгоритм на случай вариационной задачи 
 		с функционалом, зависящим от нескольких неизвестных функций.
 \end{trivlist}
 В случае необходимости, преобразовать исходную задачу к стандартному виду.
 
 
-{\bf Оценка.} Баллы за выполнение лабораторной работы распределяются следующим образом:
+{\bf Оценка.} Баллы за выполнение лабораторной работы распределяются следующим образом 
+(символом $^*$ обозначены дополнительные задания):
 \begin{center}
 	 \begin{tabular}{l|p{12cm}|l}
 		 \multicolumn{1}{c|}{\bf №} & 
 		 	\multicolumn{1}{c|}{\bf Подзадача} & 
 				\multicolumn{1}{c}{\bf Балл} \\
 		\hline
-		1 & Реализация метода Ритца с конечно-линейным базисом ($n=10$, $n=15$) для задачи а) & 1.5  \\
+		1 & Реализация метода стрельбы для линейной задачи а) & 2  \\
 		\hline
-		2 & Реализация метода Ритца с базисом из B-сплайнов ($n=5$, $n=10$) для задачи а)     & 2  \\
+		2 & Реализация метода стрельбы для задачи b). Необходимая точность
+			решения трансцендентного уравнения методом Ньютона $\varepsilon = 0.001$ & 3  \\
 		\hline
-		3 & Реализация метода Ритца с конечно-линейным базисом ($n=10$, $n=15$) для задачи b) & 1.5  \\
+		3 & Адаптация метод стрельбы для задачи c).  & 4  \\
 		\hline
-		4 & Реализация метода Ритца с базисом из B-сплайнов ($n=5$, $n=10$) для задачи b) & 2  \\
+		4 & Блок-схема программного кода (в любой нотации), комментирование кода & 1 \\
 		\hline
-		5 & Реализация метода Ритца с произвольным базисом ($n=3$, $n=5$) для задачи c).
-			Необходимая точность $\varepsilon=0.01$, точное решение найти при помощи уравнения Эйлера.& 3  \\
+		$5^*$ & Реализация метода стрельбы для задачи b), использующая вместо метода Ньютона иной метод.
+		Необходимая точность решения трансцендентного уравнения $\varepsilon = 0.01$ & $3^*$ \\
 		\hline
-		6 & Повышение точности решения задачи c) из пункта 5. до $\varepsilon=0.001$.& 1  \\
-		\hline
-		7 & Блок-схема программного кода (в любой нотации), комментирование кода & 1 \\
-		\hline
-		\multicolumn{2}{r|}{\bf ИТОГО} & 12
+		\multicolumn{2}{r|}{\bf ИТОГО} & 10
 	 \end{tabular}
 \end{center}
 
@@ -82,8 +80,8 @@ a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + y^2 - (4+2x(1-
 b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[xy' - (y')^2\right]}dx,
 \quad y(0)=1, \quad y(1)=\frac{1}{4};$
 
-c)  ${\begin{matrix}\displaystyle V\left[y\right]=\overset{{1}}{\underset{{0}}{\int
-}}{y\sqrt{1+y'^{{2}}}\normalsubformula{dx};}&y\left(0\right)=2;&y\left(1\right)=3;\end{matrix}}$
+c)  $\displaystyle V\left[y, z\right]=\int\limits\limits_{0}^{1} \left[2y'z'-y^2+z^2-2ye^x\right] dx, 
+\quad y(0)=0, \quad y(1)=1, \quad z(0)=1, \quad  z(1)=0$.
 ~\\\\
 Вариант 2.
 
@@ -93,9 +91,9 @@ a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + y^2 - 2(\pi^2+
 b)  $\displaystyle V\left[y\right]=\int\limits_0^{\frac{3\pi}{2}}{\left[y^2 - 2(y')^2\right]e^{-x}}dx, 
 \quad y(0)=0, \quad y\left(\frac{3\pi}{2}\right)=e^\frac{3\pi}{4};$
 
-c)  ${\begin{matrix}\displaystyle V\left[y\right]=\overset{{1}}{\underset{{0}}{\int
-}}{\frac{\sqrt{1+y'^{{2}}}}{y}\normalsubformula{dx};}&y\left(0\right)=2;&y\left(1\right)=1;\end{matrix}}$
-~\\\\
+c) $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[2y'z' + y^2 + z^2 - z\sin x\right]dx,
+\quad y(0) = 0, y(1)= 1, z(0) = 1, z(1) = 0.$
+\\\\
 Вариант 3.
 
 a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[2(y')^2 + \pi^2y^2 - 6\pi^2\sin(\pi x)y\right]}dx,
@@ -104,8 +102,8 @@ a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[2(y')^2 + \pi^2y^2 - 6\
 b)  $\displaystyle V\left[y\right]=\int\limits_1^2{\left[x^2(y')^2 + 12y^2\right]}dx,
 \quad y(1)=1, \quad y(2)=8;$
 
-c)  ${\begin{matrix}\displaystyle V\left[y\right]=\overset{{1}}{\underset{{0}}{\int
-}}{\normalsubformula{{yy}}'^{{2}}\normalsubformula{dx};}&y\left(0\right)=2;&y\left(1\right)=1;\end{matrix}}$
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ 2y'z' + y^2 - z^2 +2z\cos x \right] dx,
+\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
 ~\\\\
 Вариант 4.
 
@@ -115,8 +113,8 @@ a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + y^2 +
 b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[6x^2y' + (y')^2\right]}dx,
 \quad y(0)=0, \quad y(1)=-1;$
 
-c)  ${\begin{matrix}\displaystyle V\left[y\right]=\overset{{1}}{\underset{{0}}{\int
-}}{\sqrt{y\left(1+y'^{{2}}\right)}\normalsubformula{dx};}&y\left(0\right)=1;&y\left(1\right)=3;\end{matrix}}$
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ y^2 + z^2 + 2y'z' + ye^x \right] dx, 
+\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
 ~\\\\
 Вариант 5.
 
@@ -126,8 +124,8 @@ a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + 2y^2 -
 b)  $\displaystyle V\left[y\right]=\int\limits_1^2{\frac{x^2(y')^2}{2x^3 + 1}}dx,
 \quad y(1)=0, \quad y(2)=\frac{7}{2};$
 
-c)  ${\begin{matrix}\displaystyle V\left[y\right]=\overset{{3}}{\underset{{1}}{\int
-}}{y\sqrt{y'}\normalsubformula{dx};}&y\left(1\right)=2;&y\left(3\right)=8;\end{matrix}}$
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[y^2 + 4yz + z^2 + {y'}^2 +{z'}^2 + 2ze^x\right] dx,
+\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
 ~\\\\
 Вариант 6.
 
@@ -137,8 +135,8 @@ a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + 2y^2 -
 b)  $\displaystyle V\left[y\right]=\int\limits_2^4{\left[x(y')^4 - 2y(y')^3\right]}dx,
 \quad y(2)=1, \quad y(4)=5;$
 
-c)  ${\begin{matrix}\displaystyle V\left[y\right]=\overset{{2}}{\underset{{0}}{\int
-}}{y\sqrt{1+y'^{{2}}}\normalsubformula{dx};}&y\left(0\right)=-1;&y\left(2\right)=-3;\end{matrix}}$
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ (y+z)^2 + {y'}^2 + {z'}^2 + 2y \sin x \right] dx,
+\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
 ~\\\\
 Вариант 7.
 
@@ -148,8 +146,8 @@ a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + 2y^2 +
 b)  $\displaystyle V\left[y\right]=\int\limits_0^2{\left[x(y')^3 - 3y(y')^2\right]}dx,
 \quad y(0)=4, \quad y(2)=6;$
 
-c)  ${\begin{matrix}\displaystyle V\left[y\right]=\overset{{2}}{\underset{{0}}{\int
-}}{\normalsubformula{{yy}}'^{{2}}\normalsubformula{dx};}&y\left(0\right)=1;&y\left(2\right)=3;\end{matrix}}$
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ (y - z)^2 + {y'}^2 - {z'}^2 + 2z \cos x \right] dx,
+\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
 ~\\\\
 Вариант 8.
 
@@ -159,8 +157,8 @@ a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[x(y')^2 + \pi^2y^2 -
 b)  $\displaystyle V\left[y\right]=\int\limits_2^3{\frac{\sqrt{1+(y')^2}}{y}}dx,
 \quad y(2)=2, \quad y(3)=\sqrt{3};$
 
-c)  ${\begin{matrix}\displaystyle V\left[y\right]=\overset{{2}}{\underset{{0}}{\int
-}}{\frac{\sqrt{1+y'^{{2}}}}{y}\normalsubformula{dx};}&y\left(0\right)=4;&y\left(2\right)=2;\end{matrix}}$
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{-1}^{1} \left[ 2y'z' - y^2 + z^2 - 2y \cos x \right] dx, 
+\quad y(-1)=2, y(1)=0, z(-1)=1, z(1)=2.$
 ~\\\\
 Вариант 9.
 
@@ -171,8 +169,8 @@ b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + \frac{2xy}{1+x
 \quad y(0)=0, \quad y(1)=-2;$
 
 
-c)  ${\begin{matrix}\displaystyle V\left[y\right]=\overset{{2}}{\underset{{0}}{\int
-}}{y\sqrt{y'}\normalsubformula{dx};}&y\left(0\right)=2;&y\left(2\right)=4;\end{matrix}}$
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{-1}^{1} \left[ 2y'z' + y^2 + z^2 + 2ze^x \right] dx,
+\quad y(-1)=3, y(1)=1, z(-1)=0, z(1)=2.$
 ~\\\\
 Вариант 10.
 
@@ -183,7 +181,7 @@ b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + ye^x\right]}dx
 \quad y(0)=0, \quad y(1)=-2;$
 
 
-c)  ${\begin{matrix}\displaystyle V\left[y\right]=\overset{{2}}{\underset{{0}}{\int
-}}{\sqrt{y\left(1+y'^{{2}}\right)}\normalsubformula{dx};}&y\left(0\right)=2;&y\left(2\right)=1;\end{matrix}\;}$
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{-1}^{1} \left[ 2y'z' + y^2 -z^2 - 2z \sin x \right] dx,
+\quad y(-1)=2, y(1)=0, z(-1)=0, z(1)=2.$
 ~\\\\
 \end{document}
