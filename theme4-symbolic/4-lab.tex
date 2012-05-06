@@ -1,0 +1,187 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,textcomp}
+\usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=1.5cm]{geometry}
+
+% List styles
+\newcommand\liststyleWWviiiNumxxxix{%
+\renewcommand\theenumi{\arabic{enumi}}
+\renewcommand\theenumii{\arabic{enumi}.\arabic{enumii}}
+\renewcommand\theenumiii{\arabic{enumi}.\arabic{enumii}.\alph{enumiii}}
+\renewcommand\theenumiv{\arabic{enumi}.\arabic{enumii}.\alph{enumiii}.\arabic{enumiv}}
+\renewcommand\labelenumi{\theenumi}
+\renewcommand\labelenumii{\theenumii.}
+\renewcommand\labelenumiii{\theenumiii.}
+\renewcommand\labelenumiv{\theenumiv}
+}
+\newcommand\normalsubformula[1]{\text{\mathversion{normal}$#1$}}
+
+\begin{document}
+\liststyleWWviiiNumxxxix
+
+\centerline{\LARGE{\bf Лабораторная работа №3.}}
+\centerline{\Large{Метод стрельбы}}
+~\\\\
+{\bf Задание.} Используя метод стрельбы, решить численно предложенные
+вариационные задачи:
+
+\begin{trivlist}
+\itemindent=25pt
+	\item задачу a) --- используя алгоритм для линейного случая;
+	\item задачу b) --- используя алгоритм для общего случая;
+	\item задачу c) --- обобщив алгоритм на случай вариационной задачи 
+		с функционалом, зависящим от нескольких неизвестных функций.
+\end{trivlist}
+В случае необходимости, преобразовать исходную задачу к стандартному виду.
+
+
+{\bf Оценка.} Баллы за выполнение лабораторной работы распределяются следующим образом 
+(символом $^*$ обозначены дополнительные задания):
+\begin{center}
+	 \begin{tabular}{l|p{12cm}|l}
+		 \multicolumn{1}{c|}{\bf №} & 
+		 	\multicolumn{1}{c|}{\bf Подзадача} & 
+				\multicolumn{1}{c}{\bf Балл} \\
+		\hline
+		1 & Реализация метода стрельбы для линейной задачи а) & 2  \\
+		\hline
+		2 & Реализация метода стрельбы для задачи b). Необходимая точность
+			решения трансцендентного уравнения методом Ньютона $\varepsilon = 0.001$ & 3  \\
+		\hline
+		3 & Адаптация метод стрельбы для задачи c).  & 4  \\
+		\hline
+		4 & Блок-схема программного кода (в любой нотации), комментирование кода & 1 \\
+		\hline
+		$5^*$ & Реализация метода стрельбы для задачи b), использующая вместо метода Ньютона иной метод.
+		Необходимая точность решения трансцендентного уравнения $\varepsilon = 0.01$ & $3^*$ \\
+		\hline
+		\multicolumn{2}{r|}{\bf ИТОГО} & 10
+	 \end{tabular}
+\end{center}
+
+{\bf Сроки выполнения.} Две недели со дня выдачи задания.
+
+{\bf Форма сдачи работ.} Исходные файлы (скрипты, проект в Visual Studio и т.п.) должны быть запакованы в
+архив формата .zip с названием\\
+\centerline{Группа\_Фамилия\_Имя\_LAB3.zip}.
+Архив отправляется по электронной почте по адресу {\bf ogulenko.a.p@onu.edu.ua} ,
+тема письма должна совпадать с именем архива. Помимо этого, необходимо заполнить
+шаблон отчета и сдать в печатном виде. Аналитическое решение можно вписать в соответствующее место отчета вручную.
+\\\\
+\centerline{\Large{Варианты заданий}}
+~\\
+\noindent Вариант 1.
+
+a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + y^2 - (4+2x(1-x))y\right]}dx,
+	\quad y(0)=0, \quad y(1)=0;$
+
+b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[xy' - (y')^2\right]}dx,
+\quad y(0)=1, \quad y(1)=\frac{1}{4};$
+
+c)  $\displaystyle V\left[y, z\right]=\int\limits\limits_{0}^{1} \left[2y'z'-y^2+z^2-2ye^x\right] dx, 
+\quad y(0)=0, \quad y(1)=1, \quad z(0)=1, \quad  z(1)=0$.
+~\\\\
+Вариант 2.
+
+a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + y^2 - 2(\pi^2+1)\sin(\pi x)y\right]}dx,
+	\quad y(0)=0, \quad y(1)=0;$
+
+b)  $\displaystyle V\left[y\right]=\int\limits_0^{\frac{3\pi}{2}}{\left[y^2 - 2(y')^2\right]e^{-x}}dx, 
+\quad y(0)=0, \quad y\left(\frac{3\pi}{2}\right)=e^\frac{3\pi}{4};$
+
+c) $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[2y'z' + y^2 + z^2 - z\sin x\right]dx,
+\quad y(0) = 0, y(1)= 1, z(0) = 1, z(1) = 0.$
+\\\\
+Вариант 3.
+
+a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[2(y')^2 + \pi^2y^2 - 6\pi^2\sin(\pi x)y\right]}dx,
+	\quad y(0)=0, \quad y(1)=0;$
+
+b)  $\displaystyle V\left[y\right]=\int\limits_1^2{\left[x^2(y')^2 + 12y^2\right]}dx,
+\quad y(1)=1, \quad y(2)=8;$
+
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ 2y'z' + y^2 - z^2 +2z\cos x \right] dx,
+\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
+~\\\\
+Вариант 4.
+
+a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + y^2 + 
+	2\left(x^3-x^2-6x+2\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+
+b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[6x^2y' + (y')^2\right]}dx,
+\quad y(0)=0, \quad y(1)=-1;$
+
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ y^2 + z^2 + 2y'z' + ye^x \right] dx, 
+\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
+~\\\\
+Вариант 5.
+
+a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + 2y^2 - 
+	\left(4+4x(1-x)\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+
+b)  $\displaystyle V\left[y\right]=\int\limits_1^2{\frac{x^2(y')^2}{2x^3 + 1}}dx,
+\quad y(1)=0, \quad y(2)=\frac{7}{2};$
+
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[y^2 + 4yz + z^2 + {y'}^2 +{z'}^2 + 2ze^x\right] dx,
+\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
+~\\\\
+Вариант 6.
+
+a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + 2y^2 - 
+	2(\pi^2+2)\sin(\pi x)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+
+b)  $\displaystyle V\left[y\right]=\int\limits_2^4{\left[x(y')^4 - 2y(y')^3\right]}dx,
+\quad y(2)=1, \quad y(4)=5;$
+
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ (y+z)^2 + {y'}^2 + {z'}^2 + 2y \sin x \right] dx,
+\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
+~\\\\
+Вариант 7.
+
+a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + 2y^2 +
+	\left(2x^3-2x^2-6x+2\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+
+b)  $\displaystyle V\left[y\right]=\int\limits_0^2{\left[x(y')^3 - 3y(y')^2\right]}dx,
+\quad y(0)=4, \quad y(2)=6;$
+
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ (y - z)^2 + {y'}^2 - {z'}^2 + 2z \cos x \right] dx,
+\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
+~\\\\
+Вариант 8.
+
+a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[x(y')^2 + \pi^2y^2 - 
+	\left(8x-2+2\pi^2x(1-x)\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+
+b)  $\displaystyle V\left[y\right]=\int\limits_2^3{\frac{\sqrt{1+(y')^2}}{y}}dx,
+\quad y(2)=2, \quad y(3)=\sqrt{3};$
+
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{-1}^{1} \left[ 2y'z' - y^2 + z^2 - 2y \cos x \right] dx, 
+\quad y(-1)=2, y(1)=0, z(-1)=1, z(1)=2.$
+~\\\\
+Вариант 9.
+
+a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[x(y')^2 + \pi^2y^2 +
+	\left(\pi\cos(\pi x) - \pi^2(x+1)\sin(\pi x)\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+
+b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + \frac{2xy}{1+x^2}\right]}dx,
+\quad y(0)=0, \quad y(1)=-2;$
+
+
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{-1}^{1} \left[ 2y'z' + y^2 + z^2 + 2ze^x \right] dx,
+\quad y(-1)=3, y(1)=1, z(-1)=0, z(1)=2.$
+~\\\\
+Вариант 10.
+
+a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[e^x(y')^2 + x^2y^2 - 
+	\left(4x^3(1-x)-(4x+2)e^x\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+
+b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + ye^x\right]}dx,
+\quad y(0)=0, \quad y(1)=-2;$
+
+
+c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{-1}^{1} \left[ 2y'z' + y^2 -z^2 - 2z \sin x \right] dx,
+\quad y(-1)=2, y(1)=0, z(-1)=0, z(1)=2.$
+~\\\\
+\end{document}
