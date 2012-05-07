@@ -4,6 +4,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb,amsfonts,textcomp}
 \usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=1.5cm]{geometry}
+\usepackage{color}
+\usepackage{array}
+\usepackage{hhline}
 
 % List styles
 \newcommand\liststyleWWviiiNumxxxix{%
@@ -16,172 +19,216 @@
 \renewcommand\labelenumiii{\theenumiii.}
 \renewcommand\labelenumiv{\theenumiv}
 }
-\newcommand\normalsubformula[1]{\text{\mathversion{normal}$#1$}}
+%\newcommand\normalsubformula[1]{\text{\mathversion{normal}$#1$}}
 
 \begin{document}
 \liststyleWWviiiNumxxxix
 
-\centerline{\LARGE{\bf Лабораторная работа №3.}}
-\centerline{\Large{Метод стрельбы}}
+\centerline{\LARGE{\bf Лабораторная работа №4.}}
+\centerline{\Large{Решение вариационных задач средствами компьютерной математики}}
 ~\\\\
-{\bf Задание.} Используя метод стрельбы, решить численно предложенные
-вариационные задачи:
+{\bf Задание.} Используя возможности пакета MATLAB, решить аналитически 
+(т.е. при помощи символьных вычислений) предложенные вариационные задачи:
 
 \begin{trivlist}
 \itemindent=25pt
-	\item задачу a) --- используя алгоритм для линейного случая;
-	\item задачу b) --- используя алгоритм для общего случая;
-	\item задачу c) --- обобщив алгоритм на случай вариационной задачи 
-		с функционалом, зависящим от нескольких неизвестных функций.
+	\item задачу a), в которой левый конец закреплен, а правый движется по известной кривой;
+	\item задачу b), в которой функционал зависит от нескольких неизвестных функций;
+	\item задачу c), в которой неизвестная функция стеснена интегральной связью.
 \end{trivlist}
-В случае необходимости, преобразовать исходную задачу к стандартному виду.
 
 
-{\bf Оценка.} Баллы за выполнение лабораторной работы распределяются следующим образом 
-(символом $^*$ обозначены дополнительные задания):
+{\bf Оценка.} Баллы за выполнение лабораторной работы распределяются следующим образом :
 \begin{center}
 	 \begin{tabular}{l|p{12cm}|l}
 		 \multicolumn{1}{c|}{\bf №} & 
 		 	\multicolumn{1}{c|}{\bf Подзадача} & 
 				\multicolumn{1}{c}{\bf Балл} \\
 		\hline
-		1 & Реализация метода стрельбы для линейной задачи а) & 2  \\
+		1 & Решение задачи a) & 3  \\
 		\hline
-		2 & Реализация метода стрельбы для задачи b). Необходимая точность
-			решения трансцендентного уравнения методом Ньютона $\varepsilon = 0.001$ & 3  \\
+		2 & Решение задачи b) & 3  \\
 		\hline
-		3 & Адаптация метод стрельбы для задачи c).  & 4  \\
-		\hline
-		4 & Блок-схема программного кода (в любой нотации), комментирование кода & 1 \\
-		\hline
-		$5^*$ & Реализация метода стрельбы для задачи b), использующая вместо метода Ньютона иной метод.
-		Необходимая точность решения трансцендентного уравнения $\varepsilon = 0.01$ & $3^*$ \\
+		3 & Решение задачи c) & 4  \\
 		\hline
 		\multicolumn{2}{r|}{\bf ИТОГО} & 10
 	 \end{tabular}
 \end{center}
 
-{\bf Сроки выполнения.} Две недели со дня выдачи задания.
+{\bf Сроки выполнения.} Одна неделя со дня выдачи задания.
 
-{\bf Форма сдачи работ.} Исходные файлы (скрипты, проект в Visual Studio и т.п.) должны быть запакованы в
+{\bf Форма сдачи работ.} Исходные файлы и отчет должны быть запакованы в
 архив формата .zip с названием\\
-\centerline{Группа\_Фамилия\_Имя\_LAB3.zip}.
+\centerline{Группа\_Фамилия\_Имя\_LAB4.zip}.
 Архив отправляется по электронной почте по адресу {\bf ogulenko.a.p@onu.edu.ua} ,
-тема письма должна совпадать с именем архива. Помимо этого, необходимо заполнить
-шаблон отчета и сдать в печатном виде. Аналитическое решение можно вписать в соответствующее место отчета вручную.
+тема письма должна совпадать с именем архива. Помимо этого, необходимо 
+сдать отчет, заполненный по шаблону, в печатном виде.
 \\\\
 \centerline{\Large{Варианты заданий}}
 ~\\
+\newcolumntype{A}{ >{$\displaystyle \quad} c <{$}}
+\newcommand\normalsubformula[1]{\text{\mathversion{normal}$#1$}}
+
 \noindent Вариант 1.
 
-a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + y^2 - (4+2x(1-x))y\right]}dx,
-	\quad y(0)=0, \quad y(1)=0;$
+a)  ${\begin{matrix}\displaystyle \displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}+4y^{{2}}-8\normalsubformula{{xy}}+2x^{{2}}\right)\normalsubformula{{dx}};}&y\left(-1\right)=3;&
+\end{matrix}}$\\
+\indent\indent Правый конец движется по кривой $\varphi(x) = e^x - 2$.
 
-b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[xy' - (y')^2\right]}dx,
-\quad y(0)=1, \quad y(1)=\frac{1}{4};$
+b) \begin{tabular}{AAAA}
+		\multicolumn{4}{l}{$\displaystyle J\left(y, z\right) = \int\limits\limits_{0}^{1} 
+			\left(2y'z'-y^2+z^2-2ye^x\right) dx$}\\
+		y(0) = 0; & y(1)=1; & z(0) = 1; & z(1) = 0.
+	\end{tabular}
 
-c)  $\displaystyle V\left[y, z\right]=\int\limits\limits_{0}^{1} \left[2y'z'-y^2+z^2-2ye^x\right] dx, 
-\quad y(0)=0, \quad y(1)=1, \quad z(0)=1, \quad  z(1)=0$.
+с) ${\begin{matrix}\displaystyle \displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}+4y^{{2}}-8\normalsubformula{{xy}}+2x^{{2}}\right)\normalsubformula{{dx}};}&y\left(-1\right)=3;&y\left(1\right)=1;\end{matrix}}$
+\\\indent\indentинтегральная связь $\displaystyle \int\limits_{-1}^{1}{y}dx = 1$~.
 ~\\\\
 Вариант 2.
 
-a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + y^2 - 2(\pi^2+1)\sin(\pi x)y\right]}dx,
-	\quad y(0)=0, \quad y(1)=0;$
+a)  ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}-4y^{{2}}+2\normalsubformula{{xy}}-x^{{2}}\right)\normalsubformula{dx};}&y\left(-1\right)=2.\end{matrix}}$\\
+\indent\indent Правый конец движется по кривой $\varphi(x) = e^{2x} - 9$.
 
-b)  $\displaystyle V\left[y\right]=\int\limits_0^{\frac{3\pi}{2}}{\left[y^2 - 2(y')^2\right]e^{-x}}dx, 
-\quad y(0)=0, \quad y\left(\frac{3\pi}{2}\right)=e^\frac{3\pi}{4};$
+b) \begin{tabular}{AAAA}
+		\multicolumn{4}{l}{$\displaystyle J\left(y, z\right) = \int\limits\limits_{0}^{1} 
+			\left( 2y'z' + y^2 + z^2 - z\sin x\right) dx$}\\
+		y(0) = 0; & y(1)= 1; & z(0) = 1; & z(1) = 0.
+	\end{tabular}
 
-c) $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[2y'z' + y^2 + z^2 - z\sin x\right]dx,
-\quad y(0) = 0, y(1)= 1, z(0) = 1, z(1) = 0.$
-\\\\
+c) ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}-4y^{{2}}+2\normalsubformula{{xy}}-x^{{2}}\right)\normalsubformula{dx};}&y\left(-1\right)=2;&y\left(1\right)=4;\end{matrix}}$
+\\\indent\indentинтегральная связь $\displaystyle \int\limits_{-1}^{1}{y}dx = 4$~.
+~\\\\
 Вариант 3.
 
-a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[2(y')^2 + \pi^2y^2 - 6\pi^2\sin(\pi x)y\right]}dx,
-	\quad y(0)=0, \quad y(1)=0;$
+a)  ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}+4y^{{2}}+4x^{{2}}y+x{\cos}x\right)\normalsubformula{dx};}&y\left(-1\right)=2.\end{matrix}}$\\
+\indent\indent Правый конец движется по кривой $\varphi(x) = e^{x+0.5} - 3$.
 
-b)  $\displaystyle V\left[y\right]=\int\limits_1^2{\left[x^2(y')^2 + 12y^2\right]}dx,
-\quad y(1)=1, \quad y(2)=8;$
+b) \begin{tabular}{AAAA}
+		\multicolumn{4}{l}{$\displaystyle J\left(y, z\right) = \int\limits\limits_{0}^{1} 
+			\left( 2y'z' + y^2 - z^2 +2z\cos x \right) dx$}\\
+		y(0) = 0; & y(1)= 1; & z(0) = 1; & z(1) = 0.
+	\end{tabular}
 
-c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ 2y'z' + y^2 - z^2 +2z\cos x \right] dx,
-\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
+c) ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}+4y^{{2}}+4x^{{2}}y+x{\cos}x\right)\normalsubformula{dx};}&y\left(-1\right)=2;&y\left(1\right)=0{.}5;\end{matrix}}$
+\\\indent\indentинтегральная связь $\displaystyle \int\limits_{-1}^{1}{y}dx = \frac{1}{2}$~.
 ~\\\\
 Вариант 4.
 
-a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + y^2 + 
-	2\left(x^3-x^2-6x+2\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+a)  ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{2}}{\underset{{0}}{\int
+}}{\left(y'^{{2}}+9y^{{2}}+2\normalsubformula{{xy}}-x{\sin}x\right)\normalsubformula{dx};}&y\left(0\right)=1.\end{matrix}}$\\
+\indent\indent Правый конец движется по кривой $\varphi(x) = e^x - 10$.
 
-b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[6x^2y' + (y')^2\right]}dx,
-\quad y(0)=0, \quad y(1)=-1;$
+b) \begin{tabular}{AAAA}
+		\multicolumn{4}{l}{$\displaystyle J\left(y, z\right) = \int\limits\limits_{0}^{1} 
+			\left( y^2 + z^2 + 2y'z' + ye^x \right) dx$}\\
+		y(0) = 0; & y(1)= 1; & z(0) = 1; & z(1) = 0.
+	\end{tabular}
 
-c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ y^2 + z^2 + 2y'z' + ye^x \right] dx, 
-\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
+c) ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{2}}{\underset{{0}}{\int
+}}{\left(y'^{{2}}+9y^{{2}}+2\normalsubformula{{xy}}-x{\sin}x\right)\normalsubformula{dx};}&y\left(0\right)=1;&y\left(2\right)=2;\end{matrix}}$
+\\\indent\indentинтегральная связь $\displaystyle \int\limits_{0}^{2}{y}dx = 2$~.
 ~\\\\
 Вариант 5.
 
-a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + 2y^2 - 
-	\left(4+4x(1-x)\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+a)  ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{0}}{\underset{{-2}}{\int
+}}{\left(y'^{{2}}-4y^{{2}}+2y+\normalsubformula{{xe}}^{{2x}}\right)\normalsubformula{dx};}&y\left(-2\right)=0.\end{matrix}}$\\
+\indent\indent Правый конец движется по кривой $\varphi(x) = 2 - e^{2x}$.
 
-b)  $\displaystyle V\left[y\right]=\int\limits_1^2{\frac{x^2(y')^2}{2x^3 + 1}}dx,
-\quad y(1)=0, \quad y(2)=\frac{7}{2};$
+b) \begin{tabular}{AAAA}
+		\multicolumn{4}{l}{$\displaystyle J\left(y, z\right) = \int\limits\limits_{0}^{1} 
+			\left( y^2 + 4yz + z^2 + {y'}^2 +{z'}^2 + 2ze^x\right) dx$}\\
+		y(0) = 0; & y(1)= 1; & z(0) = 1; & z(1) = 0.
+	\end{tabular}
 
-c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[y^2 + 4yz + z^2 + {y'}^2 +{z'}^2 + 2ze^x\right] dx,
-\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
+c) ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{0}}{\underset{{-2}}{\int
+}}{\left(y'^{{2}}-4y^{{2}}+2y+\normalsubformula{{xe}}^{{2x}}\right)\normalsubformula{dx};}&y\left(-2\right)=0;&y\left(0\right)=1;\end{matrix}}$
+\\\indent\indentинтегральная связь $\displaystyle \int\limits_{-2}^{0}{y}dx = 1$~.
 ~\\\\
 Вариант 6.
 
-a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + 2y^2 - 
-	2(\pi^2+2)\sin(\pi x)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+a)  ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{0}}{\int
+}}{\left(y'^{{2}}-9y^{{2}}+2y{\sin}x-x^{{2}}e^{{x}}\right)\normalsubformula{dx};}&y\left(0\right)=1.\end{matrix}\;}$\\
+\indent\indent Правый конец движется по кривой $\varphi(x) = 2 - e^{2x}$.
 
-b)  $\displaystyle V\left[y\right]=\int\limits_2^4{\left[x(y')^4 - 2y(y')^3\right]}dx,
-\quad y(2)=1, \quad y(4)=5;$
+b) \begin{tabular}{AAAA}
+		\multicolumn{4}{l}{$\displaystyle J\left(y, z\right) = \int\limits\limits_{0}^{1} 
+			\left( (y+z)^2 + {y'}^2 + {z'}^2 + 2y \sin x \right) dx$}\\
+		y(0) = 0; & y(1)= 1; & z(0) = 1; & z(1) = 0.
+	\end{tabular}
 
-c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ (y+z)^2 + {y'}^2 + {z'}^2 + 2y \sin x \right] dx,
-\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
+c) ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{0}}{\int
+}}{\left(y'^{{2}}-9y^{{2}}+2y{\sin}x-x^{{2}}e^{{x}}\right)\normalsubformula{dx};}&y\left(0\right)=1;&y\left(1\right)=-1;\end{matrix}\;}$
+\\\indent\indentинтегральная связь $\displaystyle \int\limits_{0}^{1}{1}dx = 1$~.
 ~\\\\
 Вариант 7.
 
-a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + 2y^2 +
-	\left(2x^3-2x^2-6x+2\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+a)  ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}+4y^{{2}}+6\normalsubformula{{ye}}^{{x}}+2x{\cos}x\right)\normalsubformula{dx};}&y\left(-1\right)=1.\end{matrix}}$\\
+\indent\indent Правый конец движется по кривой $\varphi(x) = e^x - 2$.
 
-b)  $\displaystyle V\left[y\right]=\int\limits_0^2{\left[x(y')^3 - 3y(y')^2\right]}dx,
-\quad y(0)=4, \quad y(2)=6;$
+b) \begin{tabular}{AAAA}
+		\multicolumn{4}{l}{$\displaystyle J\left(y, z\right) = \int\limits\limits_{0}^{1} 
+			\left( (y - z)^2 + {y'}^2 - {z'}^2 + 2z \cos x \right) dx$}\\
+		y(0) = 0; & y(1)= 1; & z(0) = 1; & z(1) = 0.
+	\end{tabular}
 
-c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{0}^{1} \left[ (y - z)^2 + {y'}^2 - {z'}^2 + 2z \cos x \right] dx,
-\quad y(0)=0, y(1)=1, z(0)=1, z(1)=0.$
+c) ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}+4y^{{2}}+6\normalsubformula{{ye}}^{{x}}+2x{\cos}x\right)\normalsubformula{dx};}&y\left(-1\right)=1;&y\left(1\right)=3;\end{matrix}}$
+\\\indent\indentинтегральная связь $\displaystyle \int\limits_{-1}^{1}{y}dx = 3$~.
 ~\\\\
 Вариант 8.
 
-a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[x(y')^2 + \pi^2y^2 - 
-	\left(8x-2+2\pi^2x(1-x)\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+a)  ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}+y^{{2}}+4\normalsubformula{{ye}}^{{x}}-x{\sin}x\right)\normalsubformula{dx};}&y\left(-1\right)=1.\end{matrix}}$\\
+\indent\indent Правый конец движется по кривой $\varphi(x) = e^{x+0.5} - 2$.
 
-b)  $\displaystyle V\left[y\right]=\int\limits_2^3{\frac{\sqrt{1+(y')^2}}{y}}dx,
-\quad y(2)=2, \quad y(3)=\sqrt{3};$
+b) \begin{tabular}{AAAA}
+		\multicolumn{4}{l}{$\displaystyle J\left(y, z\right) = \int\limits\limits_{-1}^{1} 
+			\left( 2y'z' - y^2 + z^2 - 2y \cos x \right) dx$}\\
+		y(-1) = 2; & y(1)= 0; & z(-1) = 1; & z(1) = 2.
+	\end{tabular}
 
-c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{-1}^{1} \left[ 2y'z' - y^2 + z^2 - 2y \cos x \right] dx, 
-\quad y(-1)=2, y(1)=0, z(-1)=1, z(1)=2.$
+c) ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}+y^{{2}}+4\normalsubformula{{ye}}^{{x}}-x{\sin}x\right)\normalsubformula{dx};}&y\left(-1\right)=1;&y\left(1\right)=3;\end{matrix}}$
+\\\indent\indentинтегральная связь $\displaystyle \int\limits_{-1}^{1}{y}dx = 3$~.
 ~\\\\
 Вариант 9.
 
-a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[x(y')^2 + \pi^2y^2 +
-	\left(\pi\cos(\pi x) - \pi^2(x+1)\sin(\pi x)\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+a)  ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}+4y^{{2}}+8\normalsubformula{{ye}}^{{2x}}+3x^{{2}}\right)\normalsubformula{dx};}&y\left(-1\right)=1.\end{matrix}}$\\
+\indent\indent Правый конец движется по кривой $\varphi(x) = e^{2x} - 5$.
 
-b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + \frac{2xy}{1+x^2}\right]}dx,
-\quad y(0)=0, \quad y(1)=-2;$
+b) \begin{tabular}{AAAA}
+		\multicolumn{4}{l}{$\displaystyle J\left(y, z\right) = \int\limits\limits_{-1}^{1} 
+			\left( 2y'z' + y^2 + z^2 + 2ze^x \right) dx$}\\
+		y(-1) = 3; & y(1)= 1; & z(-1) = 0; & z(1) = 2.
+	\end{tabular}
 
-
-c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{-1}^{1} \left[ 2y'z' + y^2 + z^2 + 2ze^x \right] dx,
-\quad y(-1)=3, y(1)=1, z(-1)=0, z(1)=2.$
+c) ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{1}}{\underset{{-1}}{\int
+}}{\left(y'^{{2}}+4y^{{2}}+8\normalsubformula{{ye}}^{{2x}}+3x^{{2}}\right)\normalsubformula{dx};}&y\left(-1\right)=1;&y\left(1\right)=3;\end{matrix}}$
+\\\indent\indentинтегральная связь $\displaystyle \int\limits_{-1}^{1}{y}dx = 2$~.
 ~\\\\
 Вариант 10.
 
-a)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[e^x(y')^2 + x^2y^2 - 
-	\left(4x^3(1-x)-(4x+2)e^x\right)y\right]}dx, \quad y(0)=0, \quad y(1)=0;$
+a)  ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{2}}{\underset{{0}}{\int
+}}{\left(2y'^{{2}}+2y^{{2}}+y{\cos}x-5x\right)\normalsubformula{dx};}&y\left(0\right)=2.\end{matrix}}$\\
+\indent\indent Правый конец движется по кривой $\varphi(x) = 0.5e^x - 2$.
 
-b)  $\displaystyle V\left[y\right]=\int\limits_0^1{\left[(y')^2 + ye^x\right]}dx,
-\quad y(0)=0, \quad y(1)=-2;$
+b) \begin{tabular}{AAAA}
+		\multicolumn{4}{l}{$\displaystyle J\left(y, z\right) = \int\limits\limits_{-1}^{1} 
+			\left( 2y'z' + y^2 -z^2 - 2z \sin x \right) dx$}\\
+		y(-1) = 2; & y(1)= 0; & z(-1) = 0; & z(1) = 2.
+	\end{tabular}
+
+c) ${\begin{matrix}\displaystyle J\left(y\right)=\overset{{2}}{\underset{{0}}{\int
+}}{\left(2y'^{{2}}+2y^{{2}}+y{\cos}x-5x\right)\normalsubformula{dx};}&y\left(0\right)=2;&y\left(2\right)=2;\end{matrix}}$
+\\\indent\indentинтегральная связь $\displaystyle \int\limits_{0}^{2}{y}dx = 2$~.
 
 
-c)  $\displaystyle V\left[y, z\right] = \int\limits\limits_{-1}^{1} \left[ 2y'z' + y^2 -z^2 - 2z \sin x \right] dx,
-\quad y(-1)=2, y(1)=0, z(-1)=0, z(1)=2.$
-~\\\\
 \end{document}
