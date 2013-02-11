@@ -1,0 +1,517 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,textcomp}
+%\usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=1.5cm]{geometry}
+\usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=2.5cm]{geometry}
+\usepackage{multirow}
+
+% List styles
+\newcommand\liststyleWWviiiNumxxxix{%
+\renewcommand\theenumi{\bf\arabic{enumi}.}
+\renewcommand\theenumii{\bf\arabic{enumi}\alph{enumii}}
+\renewcommand\theenumiii{\arabic{enumi}.\arabic{enumii}.\alph{enumiii}}
+\renewcommand\theenumiv{\arabic{enumi}.\arabic{enumii}.\alph{enumiii}.\arabic{enumiv}}
+\renewcommand\labelenumi{\theenumi}
+\renewcommand\labelenumii{\theenumii.}
+\renewcommand\labelenumiii{\theenumiii.}
+\renewcommand\labelenumiv{\theenumiv}
+}
+
+\begin{document}
+\liststyleWWviiiNumxxxix
+\pagestyle{empty}
+\centerline{\LARGE{\bf Практическое занятие №1.}}
+\centerline{\Large{Метод Ритца}}
+~\\\\
+\centerline{\Large{Варианты заданий}}
+	\renewcommand{\arraystretch}{3}
+\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+	Вариант & $y = x$ & $y = 1+x$ & $y = 1-x$ & $V(k,b)$ & Экстремум \\ \hline 
+	1 & $\dfrac{1}{5}$ & $\dfrac{1}{5}$ & $\dfrac{1}{5}$ & 
+	$\dfrac{k^2}{5}$ & min, $k=0, \forall b$ \\ \hline 
+	2 & $-\dfrac{10}{3}$ & $-\dfrac{100}{3}$ & $\dfrac{16}{3}$ & 
+		$-\dfrac{10}{3}k^2 - 14bk - 16b^2$ & max, $k=0, b = 0$ \\ \hline 
+	3 & $\dfrac{3}{2}$ & $\dfrac{3}{2}$ & $\dfrac{1}{2}$ & 
+		$k^2 + \dfrac{k}{2}$ & min, $k=-\dfrac{1}{4}, \forall b$ \\ \hline 
+	4 & $\dfrac{3}{8}$ & $\dfrac{3}{8}$ & $\dfrac{3}{8}$ & 
+		$\dfrac{3k^2}{8}$ & min, $k=0, \forall b$ \\ \hline 
+	5 & $\dfrac{5}{3}$ & $\dfrac{20}{3}$ & $\dfrac{4}{3}$ & 
+		$k^2 + 2bk + \dfrac{2}{3}k + 2b^2 + b$ & min, $k=b=-\dfrac{1}{6}$ \\ \hline 
+	6 & $\dfrac{8\pi^3+18\pi}{3}$ & 
+	% $\dfrac{8\pi^3+12\pi^2+24\pi}{3}$ 
+		& $\dfrac{8\pi^3-12\pi^2}{3}$ & 
+	%	$\dfrac{8\pi^3+6\pi}{3}k^2 + 4\pi k + 4\pi^2 bk + 2\pi b^2$ & 
+		&
+	%	\multirow{2}{*}{min, $k=-0.2331$, $b = -0.7323$} 
+		\\ \hline 
+	7 & $\dfrac{8\pi^3+6\pi}{3}$ & 
+	% $\dfrac{8\pi^3+12\pi^2+24\pi}{3}$ 
+		& 
+	%	$\dfrac{8\pi^3-12\pi^2-12\pi}{3}$ 
+		& 
+	%	$\dfrac{8\pi^3+6\pi}{3}k^2 + 4\pi k + 4\pi^2 bk + 2\pi b^2$ & 
+		&
+	%	min, $k=-0.2331, b = -0.7323$ 
+		\\ \hline 
+	8 & $-\dfrac{10}{3}$ & $-\dfrac{100}{3}$ & $\dfrac{16}{3}$ & 
+		$-\dfrac{10}{3}k^2 - 14bk - 16b^2$ & max, $k=0, b = 0$ \\ \hline 
+	9 & $-\dfrac{10}{3}$ & $-\dfrac{100}{3}$ & $\dfrac{16}{3}$ & 
+		$-\dfrac{10}{3}k^2 - 14bk - 16b^2$ & max, $k=0, b = 0$ \\ \hline 
+	10& $-\dfrac{10}{3}$ & $-\dfrac{100}{3}$ & $\dfrac{16}{3}$ & 
+		$-\dfrac{10}{3}k^2 - 14bk - 16b^2$ & max, $k=0, b = 0$ \\ \hline 
+\end{tabular}
+\pagebreak
+\\\centerline{\Large Вариант 1.}
+	\begin{enumerate}
+	\item 	(1б.) Дан функционал 
+		$	\displaystyle V\left[y\right]=\int\limits_0^1{x^4y'^2}dx.
+		$ 
+		\begin{enumerate}
+			\item Найти его значение при $y(x) = x$, $y(x) = 1+x$, $y(x) = 1-x$.
+			\item Достигается ли экстремум $V[y]$ на множестве функций $y(x) = kx+b$?
+			Если достигается, то при каких значениях $k$ и $b$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Дан функционал 
+		$
+			\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 + y^2\right]}dx,
+		$ 
+		и краевые условия $y(0) = 1$, $y(1) = 2$. Пусть экстремум функционала
+		ищется в классе функций $\displaystyle y(x) = \varphi(x) + C\sin{\pi x}$, где
+		$C$ --- параметр, $\varphi(x) \in C^1_{[0,1]}$.
+		\begin{enumerate}
+			\item Подберите $\varphi(x)$ так, чтобы при любых значениях $C$
+				функция $y(x)$ удовлетворяла бы краевым условиям.
+			\item Достигается ли экстремум $V[y]$ на получившимся множестве
+				функций $y(x)$? Если достигается, то при каких значениях 
+				$C$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Найдите приближенное решение вариационной задачи
+		\[
+			\displaystyle V\left[y\right] = \int\limits_0^1
+			{\left[y'^2 - y^2 - 2xy\right]}dx \to \text{extr}, \quad
+			y(0) = y(1) = 0
+		\]
+		в виде $y(x) = x(1-x)(C_0 + C_1x + C_2x^2 + \dots + C_nx^n)$, ограничиться случаем $n=0$.
+	\item 	(ДЗ 1б.) Найти приближенное решение предыдущей задачи при $n=1$ и $n=2$.
+	\item[\addtocounter{enumi}{1}\theenumi*] (ДЗ 3б.) Найти приближенное решение вариационной задачи
+		\[
+			V\left[z(x,y)\right] = \int\limits_D\!\!\!\int 
+			\left[\left(\frac{\partial z}{\partial x}\right)^2 + 
+			\left(\frac{\partial z}{\partial y}\right)^2 - 2z\right]dxdy \to \text{extr},
+		\]
+		где область интегрирования $D = \left\{(x,y) : -1 \leqslant x \leqslant 1, 
+		-1 \leqslant y \leqslant 1\right\}$ и на границе этой области $z(x,y)$ равна нулю.
+		{\it Подсказка: можно попробовать искать решение в виде $z(x,y) = C(x^2-1)(y^2-1)$.}
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 2.}
+	\begin{enumerate}
+	\item 	(1б.) Дан функционал 
+		$	\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 + 2yy' - 16y^2\right]}dx.
+		$ 
+		\begin{enumerate}
+			\item Найти его значение при $y(x) = x$, $y(x) = 1+x$, $y(x) = 1-x$.
+			\item Достигается ли экстремум $V[y]$ на множестве функций $y(x) = kx+b$?
+			Если достигается, то при каких значениях $k$ и $b$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Дан функционал 
+		$
+			\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[(y'^2 + y^2\right]}dx,
+		$ 
+		и краевые условия $y(0) = 0$, $y(1) = 1$. Пусть экстремум функционала
+		ищется в классе функций $\displaystyle y(x) = \varphi(x) + C\sin{\pi x}$, где
+		$C$ --- параметр, $\varphi(x) \in C^1_{[0,1]}$.
+		\begin{enumerate}
+			\item Подберите $\varphi(x)$ так, чтобы при любых значениях $C$
+				функция $y(x)$ удовлетворяла бы краевым условиям.
+			\item Достигается ли экстремум $V[y]$ на получившимся множестве
+				функций $y(x)$? Если достигается, то при каких значениях 
+				$C$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Найдите приближенное решение вариационной задачи
+		\[
+			\displaystyle V\left[y\right] = \int\limits_1^2
+			{\left[xy'^2 - \frac{x^2-1}{x}y^2 - 2x^2y\right]}dx \to \text{extr}, \quad
+			y(1) = y(2) = 0.
+		\]
+		в виде $y(x) = (x-1)(x-2)(C_0 + C_1x + C_2x^2 + \dots + C_nx^n)$, ограничиться случаем $n=0$.
+	\item 	(ДЗ 1б.) Найти приближенное решение предыдущей задачи при $n=1$ и $n=2$.
+	\item[\addtocounter{enumi}{1}\theenumi*] (ДЗ 3б.) Найти приближенное решение вариационной задачи
+		\[
+			V\left[z(x,y)\right] = \int\limits_D\!\!\!\int 
+			\left[\left(\frac{\partial z}{\partial x}\right)^2 + 
+			\left(\frac{\partial z}{\partial y}\right)^2 - 2z\right]dxdy \to \text{extr},
+		\]
+		где область интегрирования $D = \left\{(x,y) : -1 \leqslant x \leqslant 1, 
+		-1 \leqslant y \leqslant 1\right\}$ и на границе этой области $z(x,y)$ равна нулю.
+		{\it Подсказка: можно попробовать искать решение в виде $z(x,y) = C(x^2-1)(y^2-1)$.}
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 3.}
+	\begin{enumerate}
+	\item 	(1б.) Дан функционал 
+		$	\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 + xy^2\right]}dx.
+		$ 
+		\begin{enumerate}
+			\item Найти его значение при $y(x) = x$, $y(x) = 1+x$, $y(x) = 1-x$.
+			\item Достигается ли экстремум $V[y]$ на множестве функций $y(x) = kx+b$?
+			Если достигается, то при каких значениях $k$ и $b$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Дан функционал 
+		$
+			\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 + y^2\right]}dx,
+		$ 
+		и краевые условия $y(0) = 0$, $y(1) = 2$. Пусть экстремум функционала
+		ищется в классе функций $\displaystyle y(x) = \varphi(x) + C\sin{\pi x}$, где
+		$C$ --- параметр, $\varphi(x) \in C^1_{[0,1]}$.
+		\begin{enumerate}
+			\item Подберите $\varphi(x)$ так, чтобы при любых значениях $C$
+				функция $y(x)$ удовлетворяла бы краевым условиям.
+			\item Достигается ли экстремум $V[y]$ на получившимся множестве
+				функций $y(x)$? Если достигается, то при каких значениях 
+				$C$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Найдите приближенное решение вариационной задачи
+		\[
+			\displaystyle V\left[y\right] = \int\limits_0^2
+			{\left[y'^2 + 2xy + y^2\right]}dx \to \text{extr}, \quad
+			y(0) = y(2) = 0.
+		\]
+		в виде $y(x) = x(x-2)(C_0 + C_1x + C_2x^2 + \dots + C_nx^n)$, ограничиться случаем $n=0$.
+	\item 	(ДЗ 1б.) Найти приближенное решение предыдущей задачи при $n=1$ и $n=2$.
+	\item[\addtocounter{enumi}{1}\theenumi*] (ДЗ 3б.) Найти приближенное решение вариационной задачи
+		\[
+			V\left[z(x,y)\right] = \int\limits_D\!\!\!\int 
+			\left[\left(\frac{\partial z}{\partial x}\right)^2 + 
+			\left(\frac{\partial z}{\partial y}\right)^2 - 2z\right]dxdy \to \text{extr},
+		\]
+		где область интегрирования $D = \left\{(x,y) : -1 \leqslant x \leqslant 1, 
+		-1 \leqslant y \leqslant 1\right\}$ и на границе этой области $z(x,y)$ равна нулю.
+		{\it Подсказка: можно попробовать искать решение в виде $z(x,y) = C(x^2-1)(y^2-1)$.}
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 4.}
+	\begin{enumerate}
+	\item 	(1б.) Дан функционал 
+		$	\displaystyle V\left[y\right]=\int\limits_1^2
+			{\frac{y'^2}{x^3}}dx.
+		$ 
+		\begin{enumerate}
+			\item Найти его значение при $y(x) = x$, $y(x) = 1+x$, $y(x) = 1-x$.
+			\item Достигается ли экстремум $V[y]$ на множестве функций $y(x) = kx+b$?
+			Если достигается, то при каких значениях $k$ и $b$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Дан функционал 
+		$
+			\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 + y^2\right]}dx,
+		$ 
+		и краевые условия $y(0) = 0$, $y(1) = \dfrac{1}{2}$. Пусть экстремум функционала
+		ищется в классе функций $\displaystyle y(x) = \varphi(x) + C\sin{\pi x}$, где
+		$C$ --- параметр, $\varphi(x) \in C^1_{[0,1]}$.
+		\begin{enumerate}
+			\item Подберите $\varphi(x)$ так, чтобы при любых значениях $C$
+				функция $y(x)$ удовлетворяла бы краевым условиям.
+			\item Достигается ли экстремум $V[y]$ на получившимся множестве
+				функций $y(x)$? Если достигается, то при каких значениях 
+				$C$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Найдите приближенное решение вариационной задачи
+		\[
+			\displaystyle V\left[y\right] = \int\limits_0^1
+			{\left[y'^2 - y^2 - 2xy\right]}dx \to \text{extr}, \quad
+			y(0) = y(1) = 0
+		\]
+		в виде $y(x) = x(1-x)(C_0 + C_1x + C_2x^2 + \dots + C_nx^n)$, ограничиться случаем $n=0$.
+	\item 	(ДЗ 1б.) Найти приближенное решение предыдущей задачи при $n=1$ и $n=2$.
+	\item[\addtocounter{enumi}{1}\theenumi*] (ДЗ 3б.) Найти приближенное решение вариационной задачи
+		\[
+			V\left[z(x,y)\right] = \int\limits_D\!\!\!\int 
+			\left[\left(\frac{\partial z}{\partial x}\right)^2 + 
+			\left(\frac{\partial z}{\partial y}\right)^2 - 2z\right]dxdy \to \text{extr},
+		\]
+		где область интегрирования $D = \left\{(x,y) : -1 \leqslant x \leqslant 1, 
+		-1 \leqslant y \leqslant 1\right\}$ и на границе этой области $z(x,y)$ равна нулю.
+		{\it Подсказка: можно попробовать искать решение в виде $z(x,y) = C(x^2-1)(y^2-1)$.}
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 5.}
+	\begin{enumerate}
+	\item 	(1б.) Дан функционал 
+		$	\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[x^2y'^2 + 2y^2 + 2xy\right]}dx.
+		$ 
+		\begin{enumerate}
+			\item Найти его значение при $y(x) = x$, $y(x) = 1+x$, $y(x) = 1-x$.
+			\item Достигается ли экстремум $V[y]$ на множестве функций $y(x) = kx+b$?
+			Если достигается, то при каких значениях $k$ и $b$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Дан функционал 
+		$
+			\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[(y'^2 - y^2\right]}dx,
+		$ 
+		и краевые условия $y(0) = 1$, $y(1) = 2$. Пусть экстремум функционала
+		ищется в классе функций $\displaystyle y(x) = \varphi(x) + C\sin{\pi x}$, где
+		$C$ --- параметр, $\varphi(x) \in C^1_{[0,1]}$.
+		\begin{enumerate}
+			\item Подберите $\varphi(x)$ так, чтобы при любых значениях $C$
+				функция $y(x)$ удовлетворяла бы краевым условиям.
+			\item Достигается ли экстремум $V[y]$ на получившимся множестве
+				функций $y(x)$? Если достигается, то при каких значениях 
+				$C$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Найдите приближенное решение вариационной задачи
+		\[
+			\displaystyle V\left[y\right] = \int\limits_1^2
+			{\left[xy'^2 - \frac{x^2-1}{x}y^2 - 2x^2y\right]}dx \to \text{extr}, \quad
+			y(1) = y(2) = 0.
+		\]
+		в виде $y(x) = (x-1)(x-2)(C_0 + C_1x + C_2x^2 + \dots + C_nx^n)$, ограничиться случаем $n=0$.
+	\item 	(ДЗ 1б.) Найти приближенное решение предыдущей задачи при $n=1$ и $n=2$.
+	\item[\addtocounter{enumi}{1}\theenumi*] (ДЗ 3б.) Найти приближенное решение вариационной задачи
+		\[
+			V\left[z(x,y)\right] = \int\limits_D\!\!\!\int 
+			\left[\left(\frac{\partial z}{\partial x}\right)^2 + 
+			\left(\frac{\partial z}{\partial y}\right)^2 - 2z\right]dxdy \to \text{extr},
+		\]
+		где область интегрирования $D = \left\{(x,y) : -1 \leqslant x \leqslant 1, 
+		-1 \leqslant y \leqslant 1\right\}$ и на границе этой области $z(x,y)$ равна нулю.
+		{\it Подсказка: можно попробовать искать решение в виде $z(x,y) = C(x^2-1)(y^2-1)$.}
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 6.}
+	\begin{enumerate}
+	\item 	(1б.) Дан функционал 
+		$	\displaystyle V\left[y\right]=\int\limits_0^{2\pi}
+			{\left[y'^2 - 2y\sin{x} +y^2\right]}dx.
+		$ 
+		\begin{enumerate}
+			\item Найти его значение при $y(x) = x$, $y(x) = 1+x$, $y(x) = 1-x$.
+			\item Достигается ли экстремум $V[y]$ на множестве функций $y(x) = kx+b$?
+			Если достигается, то при каких значениях $k$ и $b$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Дан функционал 
+		$
+			\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 - y^2\right]}dx,
+		$ 
+		и краевые условия $y(0) = 0$, $y(1) = 1$. Пусть экстремум функционала
+		ищется в классе функций $\displaystyle y(x) = \varphi(x) + C\sin{\pi x}$, где
+		$C$ --- параметр, $\varphi(x) \in C^1_{[0,1]}$.
+		\begin{enumerate}
+			\item Подберите $\varphi(x)$ так, чтобы при любых значениях $C$
+				функция $y(x)$ удовлетворяла бы краевым условиям.
+			\item Достигается ли экстремум $V[y]$ на получившимся множестве
+				функций $y(x)$? Если достигается, то при каких значениях 
+				$C$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Найдите приближенное решение вариационной задачи
+		\[
+			\displaystyle V\left[y\right] = \int\limits_0^2
+			{\left[y'^2 + 2xy + y^2\right]}dx \to \text{extr}, \quad
+			y(0) = y(2) = 0.
+		\]
+		в виде $y(x) = x(x-2)(C_0 + C_1x + C_2x^2 + \dots + C_nx^n)$, ограничиться случаем $n=0$.
+	\item 	(ДЗ 1б.) Найти приближенное решение предыдущей задачи при $n=1$ и $n=2$.
+	\item[\addtocounter{enumi}{1}\theenumi*] (ДЗ 3б.) Найти приближенное решение вариационной задачи
+		\[
+			V\left[z(x,y)\right] = \int\limits_D\!\!\!\int 
+			\left[\left(\frac{\partial z}{\partial x}\right)^2 + 
+			\left(\frac{\partial z}{\partial y}\right)^2 - 2z\right]dxdy \to \text{extr},
+		\]
+		где область интегрирования $D = \left\{(x,y) : -1 \leqslant x \leqslant 1, 
+		-1 \leqslant y \leqslant 1\right\}$ и на границе этой области $z(x,y)$ равна нулю.
+		{\it Подсказка: можно попробовать искать решение в виде $z(x,y) = C(x^2-1)(y^2-1)$.}
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 7.}
+	\begin{enumerate}
+	\item 	(1б.) Дан функционал 
+		$	\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[-y'^2 - 2y\sin{x} +y^2\right]}dx.
+		$ 
+		\begin{enumerate}
+			\item Найти его значение при $y(x) = x$, $y(x) = 1+x$, $y(x) = 1-x$.
+			\item Достигается ли экстремум $V[y]$ на множестве функций $y(x) = kx+b$?
+			Если достигается, то при каких значениях $k$ и $b$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Дан функционал 
+		$
+			\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 - y^2\right]}dx,
+		$ 
+		и краевые условия $y(0) = 0$, $y(1) = 2$. Пусть экстремум функционала
+		ищется в классе функций $\displaystyle y(x) = \varphi(x) + C\sin{\pi x}$, где
+		$C$ --- параметр, $\varphi(x) \in C^1_{[0,1]}$.
+		\begin{enumerate}
+			\item Подберите $\varphi(x)$ так, чтобы при любых значениях $C$
+				функция $y(x)$ удовлетворяла бы краевым условиям.
+			\item Достигается ли экстремум $V[y]$ на получившимся множестве
+				функций $y(x)$? Если достигается, то при каких значениях 
+				$C$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Найдите приближенное решение вариационной задачи
+		\[
+			\displaystyle V\left[y\right] = \int\limits_0^1
+			{\left[y'^2 - y^2 - 2xy\right]}dx \to \text{extr}, \quad
+			y(0) = y(1) = 0
+		\]
+		в виде $y(x) = x(1-x)(C_0 + C_1x + C_2x^2 + \dots + C_nx^n)$, ограничиться случаем $n=0$.
+	\item 	(ДЗ 1б.) Найти приближенное решение предыдущей задачи при $n=1$ и $n=2$.
+	\item[\addtocounter{enumi}{1}\theenumi*] (ДЗ 3б.) Найти приближенное решение вариационной задачи
+		\[
+			V\left[z(x,y)\right] = \int\limits_D\!\!\!\int 
+			\left[\left(\frac{\partial z}{\partial x}\right)^2 + 
+			\left(\frac{\partial z}{\partial y}\right)^2 - 2z\right]dxdy \to \text{extr},
+		\]
+		где область интегрирования $D = \left\{(x,y) : -1 \leqslant x \leqslant 1, 
+		-1 \leqslant y \leqslant 1\right\}$ и на границе этой области $z(x,y)$ равна нулю.
+		{\it Подсказка: можно попробовать искать решение в виде $z(x,y) = C(x^2-1)(y^2-1)$.}
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 8.}
+	\begin{enumerate}
+	\item 	(1б.) Дан функционал 
+		$	\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 + y^2 2e^xy\right]}dx.
+		$ 
+		\begin{enumerate}
+			\item Найти его значение при $y(x) = x$, $y(x) = 1+x$, $y(x) = 1-x$.
+			\item Достигается ли экстремум $V[y]$ на множестве функций $y(x) = kx+b$?
+			Если достигается, то при каких значениях $k$ и $b$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Дан функционал 
+		$
+			\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 - y^2\right]}dx,
+		$ 
+		и краевые условия $y(0) = 0$, $y(1) = \dfrac{1}{2}$. Пусть экстремум функционала
+		ищется в классе функций $\displaystyle y(x) = \varphi(x) + C\sin{\pi x}$, где
+		$C$ --- параметр, $\varphi(x) \in C^1_{[0,1]}$.
+		\begin{enumerate}
+			\item Подберите $\varphi(x)$ так, чтобы при любых значениях $C$
+				функция $y(x)$ удовлетворяла бы краевым условиям.
+			\item Достигается ли экстремум $V[y]$ на получившимся множестве
+				функций $y(x)$? Если достигается, то при каких значениях 
+				$C$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Найдите приближенное решение вариационной задачи
+		\[
+			\displaystyle V\left[y\right] = \int\limits_1^2
+			{\left[xy'^2 - \frac{x^2-1}{x}y^2 - 2x^2y\right]}dx \to \text{extr}, \quad
+			y(1) = y(2) = 0.
+		\]
+		в виде $y(x) = (x-1)(x-2)(C_0 + C_1x + C_2x^2 + \dots + C_nx^n)$, ограничиться случаем $n=0$.
+	\item 	(ДЗ 1б.) Найти приближенное решение предыдущей задачи при $n=1$ и $n=2$.
+	\item[\addtocounter{enumi}{1}\theenumi*] (ДЗ 3б.) Найти приближенное решение вариационной задачи
+		\[
+			V\left[z(x,y)\right] = \int\limits_D\!\!\!\int 
+			\left[\left(\frac{\partial z}{\partial x}\right)^2 + 
+			\left(\frac{\partial z}{\partial y}\right)^2 - 2z\right]dxdy \to \text{extr},
+		\]
+		где область интегрирования $D = \left\{(x,y) : -1 \leqslant x \leqslant 1, 
+		-1 \leqslant y \leqslant 1\right\}$ и на границе этой области $z(x,y)$ равна нулю.
+		{\it Подсказка: можно попробовать искать решение в виде $z(x,y) = C(x^2-1)(y^2-1)$.}
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 9.}
+	\begin{enumerate}
+	\item 	(1б.) Дан функционал 
+		$	\displaystyle V\left[y\right]=\int\limits_1^2
+			{\left[y'^2 + y^2 +\dfrac{2y}{x^3}\right]}dx.
+		$ 
+		\begin{enumerate}
+			\item Найти его значение при $y(x) = x$, $y(x) = 1+x$, $y(x) = 1-x$.
+			\item Достигается ли экстремум $V[y]$ на множестве функций $y(x) = kx+b$?
+			Если достигается, то при каких значениях $k$ и $b$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Дан функционал 
+		$
+			\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 - 2y^2\right]}dx,
+		$ 
+		и краевые условия $y(0) = 0$, $y(1) = 1$. Пусть экстремум функционала
+		ищется в классе функций $\displaystyle y(x) = \varphi(x) + C\sin{\pi x}$, где
+		$C$ --- параметр, $\varphi(x) \in C^1_{[0,1]}$.
+		\begin{enumerate}
+			\item Подберите $\varphi(x)$ так, чтобы при любых значениях $C$
+				функция $y(x)$ удовлетворяла бы краевым условиям.
+			\item Достигается ли экстремум $V[y]$ на получившимся множестве
+				функций $y(x)$? Если достигается, то при каких значениях 
+				$C$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Найдите приближенное решение вариационной задачи
+		\[
+			\displaystyle V\left[y\right] = \int\limits_0^2
+			{\left[y'^2 + 2xy + y^2\right]}dx \to \text{extr}, \quad
+			y(0) = y(2) = 0.
+		\]
+		в виде $y(x) = x(x-2)(C_0 + C_1x + C_2x^2 + \dots + C_nx^n)$, ограничиться случаем $n=0$.
+	\item 	(ДЗ 1б.) Найти приближенное решение предыдущей задачи при $n=1$ и $n=2$.
+	\item[\addtocounter{enumi}{1}\theenumi*] (ДЗ 3б.) Найти приближенное решение вариационной задачи
+		\[
+			V\left[z(x,y)\right] = \int\limits_D\!\!\!\int 
+			\left[\left(\frac{\partial z}{\partial x}\right)^2 + 
+			\left(\frac{\partial z}{\partial y}\right)^2 - 2z\right]dxdy \to \text{extr},
+		\]
+		где область интегрирования $D = \left\{(x,y) : -1 \leqslant x \leqslant 1, 
+		-1 \leqslant y \leqslant 1\right\}$ и на границе этой области $z(x,y)$ равна нулю.
+		{\it Подсказка: можно попробовать искать решение в виде $z(x,y) = C(x^2-1)(y^2-1)$.}
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 10.}
+	\begin{enumerate}
+	\item 	(1б.) Дан функционал 
+		$	\displaystyle V\left[y\right]=\int\limits_1^2
+			{\left[y'^3 - y^2\right]}dx.
+		$ 
+		\begin{enumerate}
+			\item Найти его значение при $y(x) = x$, $y(x) = 1+x$, $y(x) = 1-x$.
+			\item Достигается ли экстремум $V[y]$ на множестве функций $y(x) = kx+b$?
+			Если достигается, то при каких значениях $k$ и $b$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Дан функционал 
+		$
+			\displaystyle V\left[y\right]=\int\limits_0^1
+			{\left[y'^2 - 2y^2\right]}dx,
+		$ 
+		и краевые условия $y(0) = 1$, $y(1) = 2$. Пусть экстремум функционала
+		ищется в классе функций $\displaystyle y(x) = \varphi(x) + C\sin{\pi x}$, где
+		$C$ --- параметр, $\varphi(x) \in C^1_{[0,1]}$.
+		\begin{enumerate}
+			\item Подберите $\varphi(x)$ так, чтобы при любых значениях $C$
+				функция $y(x)$ удовлетворяла бы краевым условиям.
+			\item Достигается ли экстремум $V[y]$ на получившимся множестве
+				функций $y(x)$? Если достигается, то при каких значениях 
+				$C$? Максимум или минимум?
+		\end{enumerate}
+	\item 	(1б.) Найдите приближенное решение вариационной задачи
+		\[
+			\displaystyle V\left[y\right] = \int\limits_0^1
+			{\left[y'^2 - y^2 - 2xy\right]}dx \to \text{extr}, \quad
+			y(0) = y(1) = 0
+		\]
+		в виде $y(x) = x(1-x)(C_0 + C_1x + C_2x^2 + \dots + C_nx^n)$, ограничиться случаем $n=0$.
+	\item 	(ДЗ 1б.) Найти приближенное решение предыдущей задачи при $n=1$ и $n=2$.
+	\item[\addtocounter{enumi}{1}\theenumi*] (ДЗ 3б.) Найти приближенное решение вариационной задачи
+		\[
+			V\left[z(x,y)\right] = \int\limits_D\!\!\!\int 
+			\left[\left(\frac{\partial z}{\partial x}\right)^2 + 
+			\left(\frac{\partial z}{\partial y}\right)^2 - 2z\right]dxdy \to \text{extr},
+		\]
+		где область интегрирования $D = \left\{(x,y) : -1 \leqslant x \leqslant 1, 
+		-1 \leqslant y \leqslant 1\right\}$ и на границе этой области $z(x,y)$ равна нулю.
+		{\it Подсказка: можно попробовать искать решение в виде $z(x,y) = C(x^2-1)(y^2-1)$.}
+	\end{enumerate}
+\pagebreak
+
+\end{document}
