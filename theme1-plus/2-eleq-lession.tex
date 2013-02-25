@@ -1,0 +1,638 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,textcomp}
+%\usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=1.5cm]{geometry}
+\usepackage[top=2cm, bottom=2cm, marginparwidth=0pt, left=3cm, right=2.5cm]{geometry}
+\usepackage{multirow}
+\usepackage{enumitem}
+
+% List styles
+\newcommand\liststyleWWviiiNumxxxix{%
+\renewcommand\theenumi{\bf\arabic{enumi}.}
+\renewcommand\theenumii{\bf\arabic{enumi}\alph{enumii}}
+\renewcommand\theenumiii{\arabic{enumi}.\arabic{enumii}.\alph{enumiii}}
+\renewcommand\theenumiv{\arabic{enumi}.\arabic{enumii}.\alph{enumiii}.\arabic{enumiv}}
+\renewcommand\labelenumi{\theenumi}
+\renewcommand\labelenumii{\theenumii.}
+\renewcommand\labelenumiii{\theenumiii.}
+\renewcommand\labelenumiv{\theenumiv}
+}
+
+\begin{document}
+\liststyleWWviiiNumxxxix
+\pagestyle{empty}
+\centerline{\LARGE{\bf Практическое занятие №2.}}
+\centerline{\Large{Уравнение Эйлера--Лагранжа}}
+~\\\\
+\centerline{\Large{Варианты заданий}}
+	\renewcommand{\arraystretch}{3}
+\begin{center}
+	\begin{tabular}{|*{5}{c|}}
+		\hline
+		Вариант & 1a    & 1b  & 2d & 2e \\	\hline
+		1 	& $y''+y = 0$ & $y''-3x-1=0$      & $y(x)=\dfrac{4}{x^2}+1$  & $y(x)=2x^2-1$  \\	\hline
+		2 	& $y''\sin{y'}=0$ & $y''y+y'^2=0$ & $y(x)=-\dfrac{x^3 + 5x}{6}$  & $y(x)=\sqrt{x}$  \\	\hline
+		3 	& $y''\sin{y'}=0$ & $y''-3x-1=0$  & $y(x)=\cos{x}$  & Задача не имеет смысла \\	\hline
+		4 	& $y''y+y'^2=0$ & $y''+y = 0$     & Нет экстр.  & $y(x)=\cos{x}+C\cdot\sin{x}$  \\	\hline
+		5 	& $y''+y = 0$ & $y''-3x-1=0$      & Нет экстр.  & $y(x)=\dfrac{4}{x^2}+1$  \\	\hline
+		6 	& $y''\sin{y'}=0$ & $y''-3x-1=0$  & $y(x)=\sqrt{x}$  & $y(x)=\cos{x}+C\cdot\sin{x}$  \\	\hline
+		7 	& $y''\sin{y'}=0$ & $y''y+y'^2=0$ & $y(x)=2x^2-1$  & $y(x)=-\dfrac{x^3 + 5x}{6}$  \\	\hline
+		8 	& $y''y+y'^2=0$ & $y''+y = 0$     & $y(x)=\cos{x}$  & $y(x)=\dfrac{4}{x^2}+1$  \\	\hline
+		9 	& $y''\sin{y'}=0$ & $y''y+y'^2=0$ & Нет экстр.  & $y(x)=\cos{x}+C\cdot\sin{x}$  \\	\hline
+		10 	& $y''+y = 0$ & $y''-3x-1=0$      & Нет экстр.  & $y(x)=\dfrac{4}{x^2}+1$  \\	\hline
+	\end{tabular}
+\end{center}
+
+Задача 2a: интеграл не зависит от путей интегрирования, вариационная задача не
+имеет смысла.
+
+Задача 2b: решение уравнения Эйлера--Лагранжа имеет вид $y(x)\equiv C=const$, и
+не может удовлетворить граничным условиям.
+
+Задача 2c: решение существует при одном значении параметра $a$.
+
+\pagebreak
+\centerline{\Large Вариант 1.}
+	Во всех заданиях ниже предполагается, что поставлена простейшая
+	вариационная задача
+	\[
+		V[y] = \int\limits_a^b{F\left(x, y, y'\right)}dx.
+	\]
+	{\bf Определение.} Уравнение 
+	\[
+		\frac{\partial F}{\partial y} - \dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 0
+		\qquad \left(\text{в краткой форме } F_y - \dfrac{d}{dx}F_{y'} = 0\right)
+	\]
+	называется уравнением Эйлера--Лагранжа.
+	\begin{enumerate}
+	\item 	(1б.) Для заданных функционалов записать уравнение Эйлера--Лагранжа:
+		\begin{enumerate}
+	%		\item $	\displaystyle F\left(x,y,y'\right)=\sin{y'}$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right)=y^3y'^3$ 
+			\item $	\displaystyle F\left(x,y,y'\right) = y^2 - y'^2$ 
+			\item $	\displaystyle F\left(x,y,y'\right) = 2xy' - y'^2 + 3y'x^2$ 
+		\end{enumerate}
+
+	\end{enumerate}
+	{\bf Теорема.} Если непрерывно дифференцируемая на отрезке
+	$[a, b]$ функция $y_0(x)$, проходящая через две заданные точки,
+	доставляет экстремум функционалу $V\left[y(x)\right]$, то она
+	удовлетворяет также уравнению Эйлера--Лагранжа. Интегральные кривые
+	уравнения Эйлера--Лагранжа называются экстремалями функционала.
+	\begin{enumerate}[resume]
+	\item 	(2б.) Найти экстремали функционалов: 
+		\begin{enumerate}
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y(x)y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[y(x) + xy'(x)\right]}dx, \quad y(0)=0,
+				y(1)=a$ (исследовать множество решений в
+				зависимости от параметра $a$);
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_1^2{x^3y'^2(x)}dx, \quad y(1)=5,
+				y(2)=2$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_1^2{\frac{y'^3(x)}{x^2}}dx, \quad y(1)=1,
+				y(2)=7$.
+		\end{enumerate}
+	\item[\addtocounter{enumi}{1}\theenumi*] (2б.) Найти экстремали функционала:
+		\[
+			\displaystyle V\left[y\right] = \int\limits_a^b
+			{x^ny'^2}dx \to \text{extr}, \quad
+			y(a) = y_a, y(b) = y_b.
+		\]
+		Доказать, что при $n \geqslant 1$ никакие две точки,
+		находящиеся по разные стороны оси $Oy$, не могут быть соединены
+		экстремалью этого функционала.
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 2.}
+	Во всех заданиях ниже предполагается, что поставлена простейшая
+	вариационная задача
+	\[
+		V[y] = \int\limits_a^b{F\left(x, y, y'\right)}dx.
+	\]
+	{\bf Определение.} Уравнение 
+	\[
+		\frac{\partial F}{\partial y} - \dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 0
+		\qquad \left(\text{в краткой форме } F_y - \dfrac{d}{dx}F_{y'} = 0\right)
+	\]
+	называется уравнением Эйлера--Лагранжа.
+	\begin{enumerate}
+	\item 	(1б.) Для заданных функционалов записать уравнение Эйлера--Лагранжа:
+		\begin{enumerate}
+			\item $	\displaystyle F\left(x,y,y'\right)=\sin{y'}$ 
+			\item $	\displaystyle F\left(x,y,y'\right)=y^3y'^3$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right) = y^2 - y'^2$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right) = 2xy' - y'^2 + 3y'x^2$ 
+		\end{enumerate}
+
+	\end{enumerate}
+	{\bf Теорема.} Если непрерывно дифференцируемая на отрезке
+	$[a, b]$ функция $y_0(x)$, проходящая через две заданные точки,
+	доставляет экстремум функционалу $V\left[y(x)\right]$, то она
+	удовлетворяет также уравнению Эйлера--Лагранжа. Интегральные кривые
+	уравнения Эйлера--Лагранжа называются экстремалями функционала.
+	\begin{enumerate}[resume]
+	\item 	(2б.) Найти экстремали функционалов: 
+		\begin{enumerate}
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y(x)y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[y(x) + xy'(x)\right]}dx, \quad y(0)=0,
+				y(1)=a$ (исследовать множество решений в
+				зависимости от параметра $a$);
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[2xy(x) - y'^2(x) + 3y^2(x)y'(x)\right]}dx, \quad y(0)=0,
+				y(1)=-1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[2y^3(x) + 3x^2y'(x)\right]}dx, \quad y(0)=0,
+				y(1)=2$.
+		\end{enumerate}
+	\item[\addtocounter{enumi}{1}\theenumi*] (2б.) Найти экстремали функционала:
+		\[
+			\displaystyle V\left[y\right] = \int\limits_a^b
+			{x^ny'^2}dx \to \text{extr}, \quad
+			y(a) = y_a, y(b) = y_b.
+		\]
+		Доказать, что при $n \geqslant 1$ никакие две точки,
+		находящиеся по разные стороны оси $Oy$, не могут быть соединены
+		экстремалью этого функционала.
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 3.}
+	Во всех заданиях ниже предполагается, что поставлена простейшая
+	вариационная задача
+	\[
+		V[y] = \int\limits_a^b{F\left(x, y, y'\right)}dx.
+	\]
+	{\bf Определение.} Уравнение 
+	\[
+		\frac{\partial F}{\partial y} - \dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 0
+		\qquad \left(\text{в краткой форме } F_y - \dfrac{d}{dx}F_{y'} = 0\right)
+	\]
+	называется уравнением Эйлера--Лагранжа.
+	\begin{enumerate}
+	\item 	(1б.) Для заданных функционалов записать уравнение Эйлера--Лагранжа:
+		\begin{enumerate}
+			\item $	\displaystyle F\left(x,y,y'\right)=\sin{y'}$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right)=y^3y'^3$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right) = y^2 - y'^2$ 
+			\item $	\displaystyle F\left(x,y,y'\right) = 2xy' - y'^2 + 3y'x^2$ 
+		\end{enumerate}
+
+	\end{enumerate}
+	{\bf Теорема.} Если непрерывно дифференцируемая на отрезке
+	$[a, b]$ функция $y_0(x)$, проходящая через две заданные точки,
+	доставляет экстремум функционалу $V\left[y(x)\right]$, то она
+	удовлетворяет также уравнению Эйлера--Лагранжа. Интегральные кривые
+	уравнения Эйлера--Лагранжа называются экстремалями функционала.
+	\begin{enumerate}[resume]
+	\item 	(2б.) Найти экстремали функционалов: 
+		\begin{enumerate}
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y(x)y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[y(x) + xy'(x)\right]}dx, \quad y(0)=0,
+				y(1)=a$ (исследовать множество решений в
+				зависимости от параметра $a$);
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^{\frac{\pi}{4}}{\left(y'^2(x) - y^2(x)\right)}dx, \quad y(0)=1,
+				y\left(\frac{\pi}{4}\right)=\frac{\sqrt{2}}{2}$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_a^b{\left(2xy(x) + (x^2 + e^y)y'(x)\right)}dx, \quad y(a)=y_a,
+				y(b)=y_b$.
+		\end{enumerate}
+	\item[\addtocounter{enumi}{1}\theenumi*] (2б.) Найти экстремали функционала:
+		\[
+			\displaystyle V\left[y\right] = \int\limits_a^b
+			{x^ny'^2}dx \to \text{extr}, \quad
+			y(a) = y_a, y(b) = y_b.
+		\]
+		Доказать, что при $n \geqslant 1$ никакие две точки,
+		находящиеся по разные стороны оси $Oy$, не могут быть соединены
+		экстремалью этого функционала.
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 4.}
+	Во всех заданиях ниже предполагается, что поставлена простейшая
+	вариационная задача
+	\[
+		V[y] = \int\limits_a^b{F\left(x, y, y'\right)}dx.
+	\]
+	{\bf Определение.} Уравнение 
+	\[
+		\frac{\partial F}{\partial y} - \dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 0
+		\qquad \left(\text{в краткой форме } F_y - \dfrac{d}{dx}F_{y'} = 0\right)
+	\]
+	называется уравнением Эйлера--Лагранжа.
+	\begin{enumerate}
+	\item 	(1б.) Для заданных функционалов записать уравнение Эйлера--Лагранжа:
+		\begin{enumerate}
+	%		\item $	\displaystyle F\left(x,y,y'\right)=\sin{y'}$ 
+			\item $	\displaystyle F\left(x,y,y'\right)=y^3y'^3$ 
+			\item $	\displaystyle F\left(x,y,y'\right) = y^2 - y'^2$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right) = 2xy' - y'^2 + 3y'x^2$ 
+		\end{enumerate}
+
+	\end{enumerate}
+	{\bf Теорема.} Если непрерывно дифференцируемая на отрезке
+	$[a, b]$ функция $y_0(x)$, проходящая через две заданные точки,
+	доставляет экстремум функционалу $V\left[y(x)\right]$, то она
+	удовлетворяет также уравнению Эйлера--Лагранжа. Интегральные кривые
+	уравнения Эйлера--Лагранжа называются экстремалями функционала.
+	\begin{enumerate}[resume]
+	\item 	(2б.) Найти экстремали функционалов: 
+		\begin{enumerate}
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y(x)y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[y(x) + xy'(x)\right]}dx, \quad y(0)=0,
+				y(1)=a$ (исследовать множество решений в
+				зависимости от параметра $a$);
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^2{\left(2e^{y(x)} - y^2(x)\right)}dx, \quad y(0)=1,
+				y(1)=e$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^{\pi}{\left(y'^2(x) - y^2(x)\right)}dx, \quad y(0)=1,
+				y(\pi)=-1$.
+		\end{enumerate}
+	\item[\addtocounter{enumi}{1}\theenumi*] (2б.) Найти экстремали функционала:
+		\[
+			\displaystyle V\left[y\right] = \int\limits_a^b
+			{x^ny'^2}dx \to \text{extr}, \quad
+			y(a) = y_a, y(b) = y_b.
+		\]
+		Доказать, что при $n \geqslant 1$ никакие две точки,
+		находящиеся по разные стороны оси $Oy$, не могут быть соединены
+		экстремалью этого функционала.
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 5.}
+	Во всех заданиях ниже предполагается, что поставлена простейшая
+	вариационная задача
+	\[
+		V[y] = \int\limits_a^b{F\left(x, y, y'\right)}dx.
+	\]
+	{\bf Определение.} Уравнение 
+	\[
+		\frac{\partial F}{\partial y} - \dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 0
+		\qquad \left(\text{в краткой форме } F_y - \dfrac{d}{dx}F_{y'} = 0\right)
+	\]
+	называется уравнением Эйлера--Лагранжа.
+	\begin{enumerate}
+	\item 	(1б.) Для заданных функционалов записать уравнение Эйлера--Лагранжа:
+		\begin{enumerate}
+	%		\item $	\displaystyle F\left(x,y,y'\right)=\sin{y'}$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right)=y^3y'^3$ 
+			\item $	\displaystyle F\left(x,y,y'\right) = y^2 - y'^2$ 
+			\item $	\displaystyle F\left(x,y,y'\right) = 2xy' - y'^2 + 3y'x^2$ 
+		\end{enumerate}
+
+	\end{enumerate}
+	{\bf Теорема.} Если непрерывно дифференцируемая на отрезке
+	$[a, b]$ функция $y_0(x)$, проходящая через две заданные точки,
+	доставляет экстремум функционалу $V\left[y(x)\right]$, то она
+	удовлетворяет также уравнению Эйлера--Лагранжа. Интегральные кривые
+	уравнения Эйлера--Лагранжа называются экстремалями функционала.
+	\begin{enumerate}[resume]
+	\item 	(2б.) Найти экстремали функционалов: 
+		\begin{enumerate}
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y(x)y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[y(x) + xy'(x)\right]}dx, \quad y(0)=0,
+				y(1)=a$ (исследовать множество решений в
+				зависимости от параметра $a$);
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_a^b{\left(y(x) + \frac{y^2(x)}{3}\right)}dx, \quad y(a)=y_a,
+				y(b)=y_b$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_1^2{y'^2(x)x^3}dx, \quad y(1)=5,
+				y(2)=2$.
+		\end{enumerate}
+	\item[\addtocounter{enumi}{1}\theenumi*] (2б.) Найти экстремали функционала:
+		\[
+			\displaystyle V\left[y\right] = \int\limits_a^b
+			{x^ny'^2}dx \to \text{extr}, \quad
+			y(a) = y_a, y(b) = y_b.
+		\]
+		Доказать, что при $n \geqslant 1$ никакие две точки,
+		находящиеся по разные стороны оси $Oy$, не могут быть соединены
+		экстремалью этого функционала.
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 6.}
+	Во всех заданиях ниже предполагается, что поставлена простейшая
+	вариационная задача
+	\[
+		V[y] = \int\limits_a^b{F\left(x, y, y'\right)}dx.
+	\]
+	{\bf Определение.} Уравнение 
+	\[
+		\frac{\partial F}{\partial y} - \dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 0
+		\qquad \left(\text{в краткой форме } F_y - \dfrac{d}{dx}F_{y'} = 0\right)
+	\]
+	называется уравнением Эйлера--Лагранжа.
+	\begin{enumerate}
+	\item 	(1б.) Для заданных функционалов записать уравнение Эйлера--Лагранжа:
+		\begin{enumerate}
+			\item $	\displaystyle F\left(x,y,y'\right)=\sin{y'}$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right)=y^3y'^3$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right) = y^2 - y'^2$ 
+			\item $	\displaystyle F\left(x,y,y'\right) = 2xy' - y'^2 + 3y'x^2$ 
+		\end{enumerate}
+
+	\end{enumerate}
+	{\bf Теорема.} Если непрерывно дифференцируемая на отрезке
+	$[a, b]$ функция $y_0(x)$, проходящая через две заданные точки,
+	доставляет экстремум функционалу $V\left[y(x)\right]$, то она
+	удовлетворяет также уравнению Эйлера--Лагранжа. Интегральные кривые
+	уравнения Эйлера--Лагранжа называются экстремалями функционала.
+	\begin{enumerate}[resume]
+	\item 	(2б.) Найти экстремали функционалов: 
+		\begin{enumerate}
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y(x)y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[e^{y(x)} + xy'(x)\right]}dx, \quad y(0)=0,
+				y(1)=a$ (исследовать множество решений в
+				зависимости от параметра $a$);
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left(2y^3(x) + 3x^2y'(x)\right)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^{\pi}{\left(y'^2(x) - y^2(x)\right)}dx, \quad y(0)=1,
+				y(\pi)=-1$.
+		\end{enumerate}
+	\item[\addtocounter{enumi}{1}\theenumi*] (2б.) Найти экстремали функционала:
+		\[
+			\displaystyle V\left[y\right] = \int\limits_a^b
+			{x^ny'^2}dx \to \text{extr}, \quad
+			y(a) = y_a, y(b) = y_b.
+		\]
+		Доказать, что при $n \geqslant 1$ никакие две точки,
+		находящиеся по разные стороны оси $Oy$, не могут быть соединены
+		экстремалью этого функционала.
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 7.}
+	Во всех заданиях ниже предполагается, что поставлена простейшая
+	вариационная задача
+	\[
+		V[y] = \int\limits_a^b{F\left(x, y, y'\right)}dx.
+	\]
+	{\bf Определение.} Уравнение 
+	\[
+		\frac{\partial F}{\partial y} - \dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 0
+		\qquad \left(\text{в краткой форме } F_y - \dfrac{d}{dx}F_{y'} = 0\right)
+	\]
+	называется уравнением Эйлера--Лагранжа.
+	\begin{enumerate}
+	\item 	(1б.) Для заданных функционалов записать уравнение Эйлера--Лагранжа:
+		\begin{enumerate}
+			\item $	\displaystyle F\left(x,y,y'\right)=\sin{y'}$ 
+			\item $	\displaystyle F\left(x,y,y'\right)=y^3y'^3$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right) = y^2 - y'^2$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right) = 2xy' - y'^2 + 3y'x^2$ 
+		\end{enumerate}
+
+	\end{enumerate}
+	{\bf Теорема.} Если непрерывно дифференцируемая на отрезке
+	$[a, b]$ функция $y_0(x)$, проходящая через две заданные точки,
+	доставляет экстремум функционалу $V\left[y(x)\right]$, то она
+	удовлетворяет также уравнению Эйлера--Лагранжа. Интегральные кривые
+	уравнения Эйлера--Лагранжа называются экстремалями функционала.
+	\begin{enumerate}[resume]
+	\item 	(2б.) Найти экстремали функционалов: 
+		\begin{enumerate}
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y(x)y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[e^{y(x)} + xy'(x)\right]}dx, \quad y(0)=0,
+				y(1)=a$ (исследовать множество решений в
+				зависимости от параметра $a$);
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_1^2{\frac{y'^3(x)}{x^2}}dx, \quad y(1)=1,
+				y(2)=7$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left(2xy(x) - y'^2(x) + 3y'(x)y^2(x)\right)}dx, \quad y(0)=0,
+				y(1)=-1$.
+		\end{enumerate}
+	\item[\addtocounter{enumi}{1}\theenumi*] (2б.) Найти экстремали функционала:
+		\[
+			\displaystyle V\left[y\right] = \int\limits_a^b
+			{x^ny'^2}dx \to \text{extr}, \quad
+			y(a) = y_a, y(b) = y_b.
+		\]
+		Доказать, что при $n \geqslant 1$ никакие две точки,
+		находящиеся по разные стороны оси $Oy$, не могут быть соединены
+		экстремалью этого функционала.
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 8.}
+	Во всех заданиях ниже предполагается, что поставлена простейшая
+	вариационная задача
+	\[
+		V[y] = \int\limits_a^b{F\left(x, y, y'\right)}dx.
+	\]
+	{\bf Определение.} Уравнение 
+	\[
+		\frac{\partial F}{\partial y} - \dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 0
+		\qquad \left(\text{в краткой форме } F_y - \dfrac{d}{dx}F_{y'} = 0\right)
+	\]
+	называется уравнением Эйлера--Лагранжа.
+	\begin{enumerate}
+	\item 	(1б.) Для заданных функционалов записать уравнение Эйлера--Лагранжа:
+		\begin{enumerate}
+	%		\item $	\displaystyle F\left(x,y,y'\right)=\sin{y'}$ 
+			\item $	\displaystyle F\left(x,y,y'\right)=y^3y'^3$ 
+			\item $	\displaystyle F\left(x,y,y'\right) = y^2 - y'^2$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right) = 2xy' - y'^2 + 3y'x^2$ 
+		\end{enumerate}
+
+	\end{enumerate}
+	{\bf Теорема.} Если непрерывно дифференцируемая на отрезке
+	$[a, b]$ функция $y_0(x)$, проходящая через две заданные точки,
+	доставляет экстремум функционалу $V\left[y(x)\right]$, то она
+	удовлетворяет также уравнению Эйлера--Лагранжа. Интегральные кривые
+	уравнения Эйлера--Лагранжа называются экстремалями функционала.
+	\begin{enumerate}[resume]
+	\item 	(2б.) Найти экстремали функционалов: 
+		\begin{enumerate}
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y(x)y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[e^{y(x)} + xy'(x)\right]}dx, \quad y(0)=0,
+				y(1)=a$ (исследовать множество решений в
+				зависимости от параметра $a$);
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^{\frac{\pi}{4}}{\left(y'^2(x) - y^2(x)\right)}dx, \quad y(0)=1,
+				y\left(\frac{\pi}{4}\right)=\frac{\sqrt{2}}{2}$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_1^2{x^3y'^2(x)}dx, \quad y(1)=5,
+				y(2)=2$.
+		\end{enumerate}
+	\item[\addtocounter{enumi}{1}\theenumi*] (2б.) Найти экстремали функционала:
+		\[
+			\displaystyle V\left[y\right] = \int\limits_a^b
+			{x^ny'^2}dx \to \text{extr}, \quad
+			y(a) = y_a, y(b) = y_b.
+		\]
+		Доказать, что при $n \geqslant 1$ никакие две точки,
+		находящиеся по разные стороны оси $Oy$, не могут быть соединены
+		экстремалью этого функционала.
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 9.}
+	Во всех заданиях ниже предполагается, что поставлена простейшая
+	вариационная задача
+	\[
+		V[y] = \int\limits_a^b{F\left(x, y, y'\right)}dx.
+	\]
+	{\bf Определение.} Уравнение 
+	\[
+		\frac{\partial F}{\partial y} - \dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 0
+		\qquad \left(\text{в краткой форме } F_y - \dfrac{d}{dx}F_{y'} = 0\right)
+	\]
+	называется уравнением Эйлера--Лагранжа.
+	\begin{enumerate}
+	\item 	(1б.) Для заданных функционалов записать уравнение Эйлера--Лагранжа:
+		\begin{enumerate}
+			\item $	\displaystyle F\left(x,y,y'\right)=\sin{y'}$ 
+			\item $	\displaystyle F\left(x,y,y'\right)=y^3y'^3$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right) = y^2 - y'^2$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right) = 2xy' - y'^2 + 3y'x^2$ 
+		\end{enumerate}
+
+	\end{enumerate}
+	{\bf Теорема.} Если непрерывно дифференцируемая на отрезке
+	$[a, b]$ функция $y_0(x)$, проходящая через две заданные точки,
+	доставляет экстремум функционалу $V\left[y(x)\right]$, то она
+	удовлетворяет также уравнению Эйлера--Лагранжа. Интегральные кривые
+	уравнения Эйлера--Лагранжа называются экстремалями функционала.
+	\begin{enumerate}[resume]
+	\item 	(2б.) Найти экстремали функционалов: 
+		\begin{enumerate}
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y(x)y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[e^{y(x)} + xy'(x)\right]}dx, \quad y(0)=0,
+				y(1)=a$ (исследовать множество решений в
+				зависимости от параметра $a$);
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_a^b{\left(y(x) + \frac{y^2(x)}{3}\right)}dx, \quad y(a)=y_a,
+				y(b)=y_b$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^{\pi}{\left(y'^2(x) - y^2(x)\right)}dx, \quad y(0)=1,
+				y(\pi)=-1$; 
+		\end{enumerate}
+	\item[\addtocounter{enumi}{1}\theenumi*] (2б.) Найти экстремали функционала:
+		\[
+			\displaystyle V\left[y\right] = \int\limits_a^b
+			{x^ny'^2}dx \to \text{extr}, \quad
+			y(a) = y_a, y(b) = y_b.
+		\]
+		Доказать, что при $n \geqslant 1$ никакие две точки,
+		находящиеся по разные стороны оси $Oy$, не могут быть соединены
+		экстремалью этого функционала.
+	\end{enumerate}
+\pagebreak
+\centerline{\Large Вариант 10.}
+	Во всех заданиях ниже предполагается, что поставлена простейшая
+	вариационная задача
+	\[
+		V[y] = \int\limits_a^b{F\left(x, y, y'\right)}dx.
+	\]
+	{\bf Определение.} Уравнение 
+	\[
+		\frac{\partial F}{\partial y} - \dfrac{d}{dx}\dfrac{\partial F}{\partial y'} = 0
+		\qquad \left(\text{в краткой форме } F_y - \dfrac{d}{dx}F_{y'} = 0\right)
+	\]
+	называется уравнением Эйлера--Лагранжа.
+	\begin{enumerate}
+	\item 	(1б.) Для заданных функционалов записать уравнение Эйлера--Лагранжа:
+		\begin{enumerate}
+	%		\item $	\displaystyle F\left(x,y,y'\right)=\sin{y'}$ 
+	%		\item $	\displaystyle F\left(x,y,y'\right)=y^3y'^3$ 
+			\item $	\displaystyle F\left(x,y,y'\right) = y^2 - y'^2$ 
+			\item $	\displaystyle F\left(x,y,y'\right) = 2xy' - y'^2 + 3y'x^2$ 
+		\end{enumerate}
+
+	\end{enumerate}
+	{\bf Теорема.} Если непрерывно дифференцируемая на отрезке
+	$[a, b]$ функция $y_0(x)$, проходящая через две заданные точки,
+	доставляет экстремум функционалу $V\left[y(x)\right]$, то она
+	удовлетворяет также уравнению Эйлера--Лагранжа. Интегральные кривые
+	уравнения Эйлера--Лагранжа называются экстремалями функционала.
+	\begin{enumerate}[resume]
+	\item 	(2б.) Найти экстремали функционалов: 
+		\begin{enumerate}
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{y(x)y'(x)}dx, \quad y(0)=0,
+				y(1)=1$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left[e^{y(x)} + xy'(x)\right]}dx, \quad y(0)=0,
+				y(1)=a$ (исследовать множество решений в
+				зависимости от параметра $a$);
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_0^1{\left(2e^{y(x)} - y^2(x)\right)}dx, \quad y(0)=1,
+				y(1)=e$; 
+			\item $	\displaystyle V\left[y(x)\right]=
+				\int\limits_1^2{x^3y'^2(x)}dx, \quad y(1)=5,
+				y(2)=2$.
+		\end{enumerate}
+	\item[\addtocounter{enumi}{1}\theenumi*] (2б.) Найти экстремали функционала:
+		\[
+			\displaystyle V\left[y\right] = \int\limits_a^b
+			{x^ny'^2}dx \to \text{extr}, \quad
+			y(a) = y_a, y(b) = y_b.
+		\]
+		Доказать, что при $n \geqslant 1$ никакие две точки,
+		находящиеся по разные стороны оси $Oy$, не могут быть соединены
+		экстремалью этого функционала.
+	\end{enumerate}
+\pagebreak
+
+\end{document}
